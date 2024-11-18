@@ -1,0 +1,2074 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> -->
+        <script src="https://code.jquery.com/jquery-3.7.1.slim.min.js" integrity="sha256-kmHvs0B+OpCW5GVHUNjv9rOmY0IvSIRcf7zGUDTDQM8=" crossorigin="anonymous"></script>     
+
+        <style>
+            body{
+                height: 100vh;
+                width: 100vw; 
+                margin: 0;
+                padding: 0;
+                background-color: black;
+                position: relative;
+                overflow: hidden;
+            }
+            textarea {
+                resize: none;
+                border-radius: 8px;
+                padding: 10px 10px;
+            }
+            #pieces{
+                display: inline-grid;
+                position: absolute;
+                right: -5px;
+                bottom:90px;
+            }
+            #pieces button{
+                text-transform: uppercase;
+                padding: 10px 10px;
+                margin: 0;
+                border-radius: 8px;
+                border: #fff;
+                background-color: rgba(0, 0, 0, 0.35);
+                color: #fff;
+                width: 175px;
+                border: 1px solid #ffffff3f;
+                display: grid;
+                justify-items: start;
+                justify-content: space-between;
+                align-items: center;
+                flex-wrap: nowrap;
+                flex-direction: row;
+                align-content: space-between;
+                gap: 7px;
+            }
+            #pieces button:hover{
+                background-color:#B3976A;
+            }
+            #options-villa{
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                width: 100%;
+                text-align: center;
+            }
+            #titre{
+                position: absolute;
+                top:0;
+                left: 0;
+                z-index: 1;
+            }
+            #titre h1{
+                color: #fff;
+                font-family: Lato;
+                font-weight: 500;
+                margin: 25px;
+            }
+            #options{
+                background-color: rgba(0, 0, 0, 0.35);
+                backdrop-filter: blur(3px);
+            }
+            #options button{
+                text-transform: uppercase;
+                padding: 10px 20px;
+                margin: 10px 5px;
+                border-radius: 8px;
+                border: #fff;
+                background-color: rgba(0, 0, 0, 0.35);
+                color: #fff;
+                width: 150px;
+            }
+            #options button:hover{
+                background-color:#B3976A;
+            }
+
+            .button-active {
+                background-color: #B3976A !important;
+            }
+
+            #flooring{
+                display: none;
+                position: relative;
+                margin-right: 850px;
+            }
+
+            #flooring-kitchen{
+                display: none;
+                position: relative;
+                margin-right: 700px;
+            }
+
+            #flooring-bathroom{
+                display: none;
+                position: relative;
+                margin-right: 170px;
+            }
+
+            #flooring-bedroom{
+                display: none;
+                position: relative;
+                margin-right: 350px;
+            }
+
+            #flooring-guest{
+                display: none;
+                position: relative;
+                margin-right: 700px;
+            }
+
+            .tooltip-button {
+                    position: relative;
+                    cursor: pointer;
+                    border: none;
+                    background: none;
+                }
+
+                .tooltip-button .tooltip {
+                    position: absolute;
+                    bottom: 130%; /* Place le tooltip au-dessus du bouton */
+                    left: 50%;
+                    transform: translateX(-50%);
+                    background-color: rgba(51, 51, 51, 0.9);
+                    color: #fff;
+                    padding: 10px;
+                    border-radius: 5px;
+                    white-space: nowrap;
+                    opacity: 0;
+                    visibility: hidden;
+                    transition: opacity 0.2s;
+                    font-size: 12px;
+                    width: max-content;
+                    text-align: center;
+                    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+                }
+
+                .tooltip-button:hover .tooltip {
+                    opacity: 1;
+                    visibility: visible;
+                }
+
+                /* Créer la petite flèche */
+            .tooltip-button .tooltip::after {
+                content: "";
+                position: absolute;
+                top: 100%;
+                left: 50%;
+                transform: translateX(-50%);
+                border-width: 6px;
+                border-style: solid;
+                border-color: rgba(51, 51, 51, 0.9) transparent transparent transparent;
+            }
+
+            #walling{
+                display: none;
+                position: relative;
+                margin-right: 530px;
+            }
+
+            #walling-kitchen{
+                display: none;
+                position: relative;
+                margin-right: 370px;
+            }
+
+            #walling-bathroom{
+                display: none;
+                position: relative;
+                margin-left: 300px;
+            }
+
+            #walling-bedroom{
+                display: none;
+                position: relative;
+                margin-right: 30px;
+            }
+
+            #walling-guest{
+                display: none;
+                position: relative;
+                margin-right: 370px;
+            }
+
+            #wood_texture{
+                display: none;
+                position: relative;
+                margin-right: 330px;
+            }
+
+            #wood_texture-bedroom{
+                display: none;
+                position: relative;
+                margin-left: 150px;  
+            }
+
+            #door{
+                display: none;
+                position: relative;
+                margin-left: 640px;    
+            }
+
+            #door-kitchen{
+                display: none;
+                position: relative;
+                margin-left: 480px;  
+            }
+
+            #door-guest{
+                display: none;
+                position: relative;
+                margin-left: 480px;  
+            }
+
+            #door_handle{
+                display: none;
+                position: relative;
+                margin-left: 700px;  
+            }
+
+            #door_handle-kitchen{
+                display: none;
+                position: relative;
+                margin-left: 850px;  
+            }
+
+            #door_handle-guest{
+                display: none;
+                position: relative;
+                margin-left: 850px;  
+            }
+
+            #flooring button, #walling button, #wood_texture button, #door button, #door_handle button, #flooring-bathroom button, #walling-bathroom button, #flooring-bedroom button, #walling-bedroom button, #wood_texture-bedroom button, #flooring-kitchen button, #walling-kitchen button,  #door-kitchen button, #door_handle-kitchen button, #flooring-guest button, #walling-guest button, #door-guest button, #door_handle-guest button {
+                border-radius: 12px; 
+                border: 2px solid #fff;
+                height: 60px;
+                width: 60px; 
+                padding: 0;
+                margin: 5px;
+            }
+            #flooring button img, #walling button img, #wood_texture img, #door img, #door_handle img, #flooring-bathroom img, #walling-bathroom img, #flooring-bedroom img, #walling-bedroom img, #wood_texture-bedroom img, #flooring-kitchen img, #walling-kitchen img,  #door-kitchen img, #door_handle-kitchen img, #flooring-guest img, #walling-guest img, #door-guest img, #door_handle-guest img{
+                width: 100%;
+                height: 100%;
+                border-radius: 12px;
+            }
+            #scene { 
+                height: 100vh;
+                width: 100vw; 
+                margin: 0;
+                padding: 0;
+                position: relative;
+            }
+            #base-00{
+                background-image: url("interior/CM-T8-LIVING/00-BASELAYER.png");
+                background-repeat: no-repeat;
+                background-size: cover;
+                background-position: center center;
+                max-height: 100%;
+                max-width: 100%;
+                height: 100%;
+                width: 100%;
+                position: absolute;
+                margin: 0;
+                padding: 0;
+            }
+
+            #base-kitchen{
+                background-image: url("interior/CM_T8_KITCHEN/00_T8 _KIT_BASE LAYER.png");
+                background-repeat: no-repeat;
+                background-size: cover;
+                background-position: center center;
+                max-height: 100%;
+                max-width: 100%;
+                height: 100%;
+                width: 100%;
+                position: absolute;
+                margin: 0;
+                padding: 0;
+                display: none;
+            }
+
+            #base-bathroom{
+                background-image: url("interior/CM-T8-MBATH/00-T8-MBATHBASELAYER.png");
+                background-repeat: no-repeat;
+                background-size: cover;
+                background-position: center center;
+                max-height: 100%;
+                max-width: 100%;
+                height: 100%;
+                width: 100%;
+                position: absolute;
+                margin: 0;
+                padding: 0;
+                display: none;
+            }
+
+            #base-bedroom{
+                background-image: url("interior/CM-T8-MBED/BASELAYER.png");
+                background-repeat: no-repeat;
+                background-size: cover;
+                background-position: center center;
+                max-height: 100%;
+                max-width: 100%;
+                height: 100%;
+                width: 100%;
+                position: absolute;
+                margin: 0;
+                padding: 0;
+                display: none;
+            }
+
+            #base-guest{
+                background-image: url("interior/CM_T8_AQ/00_T8_BED03_BASE_LAYER.png");
+                background-repeat: no-repeat;
+                background-size: cover;
+                background-position: center center;
+                max-height: 100%;
+                max-width: 100%;
+                height: 100%;
+                width: 100%;
+                position: absolute;
+                margin: 0;
+                padding: 0;
+                display: none;
+            }
+
+            #FLOOR-CERDARK{
+                background-image: url("interior/CM-T8-LIVING/01-T8-LIVING-FLOOR-CERDARK.png");
+                background-repeat: no-repeat;
+                background-size: cover;
+                background-position: center center;
+                max-height: 100%;
+                max-width: 100%;
+                height: 100%;
+                width: 100%;
+                position: absolute;
+                margin: 0;
+                padding: 0;
+                display: none;
+            }
+            #FLOOR-CERLIGHT{
+                background-image: url("interior/CM-T8-LIVING/01-T8-LIVING-FLOOR-CERLIGHT.png");
+                background-repeat: no-repeat;
+                background-size: cover;
+                background-position: center center;
+                max-height: 100%;
+                max-width: 100%;
+                height: 100%;
+                width: 100%;
+                position: absolute;
+                margin: 0;
+                padding: 0;
+                display: none;
+            }
+            #FLOOR-TIMBERDARK{
+                background-image: url("interior/CM-T8-LIVING/01-T8-LIVING-FLOOR-TIMBER-DARKS.png");
+                background-repeat: no-repeat;
+                background-size: cover;
+                background-position: center center;
+                max-height: 100%;
+                max-width: 100%;
+                height: 100%;
+                width: 100%;
+                position: absolute;
+                margin: 0;
+                padding: 0;
+                display: none;
+            }
+            #FLOOR-TIMBERLIGHT{
+                background-image: url("interior/CM-T8-LIVING/01-T8-LIVING-FLOOR-TIMBERLIGHT.png");
+                background-repeat: no-repeat;
+                background-size: cover;
+                background-position: center center;
+                max-height: 100%;
+                max-width: 100%;
+                height: 100%;
+                width: 100%;
+                position: absolute;
+                margin: 0;
+                padding: 0;
+                display: none;
+            }
+            #FURNITURE{
+                background-image: url("interior/CM-T8-LIVING/05-Furniture.png");
+                background-repeat: no-repeat;
+                background-size: cover;
+                background-position: center center;
+                max-height: 100%;
+                max-width: 100%;
+                height: 100%;
+                width: 100%;
+                position: absolute;
+                margin: 0;
+                padding: 0;
+                display: none;
+            }
+            #LIGHT{
+                background-image: url("interior/CM-T8-LIVING/03-LIGHT.png");
+                background-repeat: no-repeat;
+                background-size: cover;
+                background-position: center center;
+                max-height: 100%;
+                max-width: 100%;
+                height: 100%;
+                width: 100%;
+                position: absolute;
+                margin: 0;
+                padding: 0;
+                display: none;
+            }
+
+            #WF-DARK{
+                background-image: url("interior/CM-T8-LIVING/02-T8-LIVING-WF-DARK.png");
+                background-repeat: no-repeat;
+                background-size: cover;
+                background-position: center center;
+                max-height: 100%;
+                max-width: 100%;
+                height: 100%;
+                width: 100%;
+                position: absolute;
+                margin: 0;
+                padding: 0;
+                display: none;
+            }
+            #WF-LIGHT{
+                background-image: url("interior/CM-T8-LIVING/02-T8-LIVING-WF-LIGHT.png");
+                background-repeat: no-repeat;
+                background-size: cover;
+                background-position: center center;
+                max-height: 100%;
+                max-width: 100%;
+                height: 100%;
+                width: 100%;
+                position: absolute;
+                margin: 0;
+                padding: 0;
+                
+            }
+
+            #WF-CERDARK{
+                background-image: url("interior/CM-T8-LIVING/02-T8-LIVING-WALLFINISH-CER-DARK.png");
+                background-repeat: no-repeat;
+                background-size: cover;
+                background-position: center center;
+                max-height: 100%;
+                max-width: 100%;
+                height: 100%;
+                width: 100%;
+                position: absolute;
+                margin: 0;
+                padding: 0;
+                display: none;
+            }
+            #WF-CERLIGHT{
+                background-image: url("interior/CM-T8-LIVING/02-T8-LIVING-WALLFINISH-CER-LIGHT.png");
+                background-repeat: no-repeat;
+                background-size: cover;
+                background-position: center center;
+                max-height: 100%;
+                max-width: 100%;
+                height: 100%;
+                width: 100%;
+                position: absolute;
+                margin: 0;
+                padding: 0;
+                display: none;
+            }
+
+            #WT_LIGHT{
+                background-image: url("interior/CM-T8-LIVING/02-T8-LIVING-WALLFINISH-CLADDING-LIGHT.png");
+                background-repeat: no-repeat;
+                background-size: cover;
+                background-position: center center;
+                max-height: 100%;
+                max-width: 100%;
+                height: 100%;
+                width: 100%;
+                position: absolute;
+                margin: 0;
+                padding: 0;
+                display: none;
+            }
+
+            #WT_DARK{
+                background-image: url("interior/CM-T8-LIVING/02-T8-LIVING-WALLFINISH-CLADDING-DARK.png");
+                background-repeat: no-repeat;
+                background-size: cover;
+                background-position: center center;
+                max-height: 100%;
+                max-width: 100%;
+                height: 100%;
+                width: 100%;
+                position: absolute;
+                margin: 0;
+                padding: 0;
+                display: none;
+            }
+
+            #DOOR_LIGHT{
+                background-image: url("interior/CM-T8-LIVING/04-T8-LIVING-DOOR-TIMBER-LIGHT.png");
+                background-repeat: no-repeat;
+                background-size: cover;
+                background-position: center center;
+                max-height: 100%;
+                max-width: 100%;
+                height: 100%;
+                width: 100%;
+                position: absolute;
+                margin: 0;
+                padding: 0;
+                display: none;
+            }
+
+            #DOOR_DARK{
+                background-image: url("interior/CM-T8-LIVING/04-T8-LIVING-DOOR-TIMBER-DARK.png");
+                background-repeat: no-repeat;
+                background-size: cover;
+                background-position: center center;
+                max-height: 100%;
+                max-width: 100%;
+                height: 100%;
+                width: 100%;
+                position: absolute;
+                margin: 0;
+                padding: 0;
+                display: none;
+            }
+
+            #DH_DARK{
+                background-image: url("interior/CM-T8-LIVING/04-T8-LIVING-DOOR-FITTING-DARK.png");
+                background-repeat: no-repeat;
+                background-size: cover;
+                background-position: center center;
+                max-height: 100%;
+                max-width: 100%;
+                height: 100%;
+                width: 100%;
+                position: absolute;
+                margin: 0;
+                padding: 0;
+                display: none;
+            }
+
+            #DH_GOLG{
+                background-image: url("interior/CM-T8-LIVING/04-T8-LIVING-DOOR-FITTING-GOLD.png");
+                background-repeat: no-repeat;
+                background-size: cover;
+                background-position: center center;
+                max-height: 100%;
+                max-width: 100%;
+                height: 100%;
+                width: 100%;
+                position: absolute;
+                margin: 0;
+                padding: 0;
+                display: none;
+            }
+
+            #DH_SILVER{
+                background-image: url("interior/CM-T8-LIVING/04-T8-LIVING-DOOR-FITTING-SILVER.png");
+                background-repeat: no-repeat;
+                background-size: cover;
+                background-position: center center;
+                max-height: 100%;
+                max-width: 100%;
+                height: 100%;
+                width: 100%;
+                position: absolute;
+                margin: 0;
+                padding: 0;
+                display: none;
+            }
+
+            /* KITCHEN */
+            
+            #FLOOR-TIMBERDARK-KITCHEN{
+                background-image: url("interior/CM_T8_KITCHEN/01_T8_KIT_ FLOOR_TIMBER_DARK.png");
+                background-repeat: no-repeat;
+                background-size: cover;
+                background-position: center center;
+                max-height: 100%;
+                max-width: 100%;
+                height: 100%;
+                width: 100%;
+                position: absolute;
+                margin: 0;
+                padding: 0;
+                display: none;
+            }
+
+            #FLOOR-TIMBERLIGHT-KITCHEN{
+                background-image: url("interior/CM_T8_KITCHEN/01_T8_KIT_ FLOOR_TIMBER_LIGHT.png");
+                background-repeat: no-repeat;
+                background-size: cover;
+                background-position: center center;
+                max-height: 100%;
+                max-width: 100%;
+                height: 100%;
+                width: 100%;
+                position: absolute;
+                margin: 0;
+                padding: 0;
+                display: none;
+            }
+
+            #FLOOR-CERLIGHT-KITCHEN{
+                background-image: url("interior/CM_T8_KITCHEN/01_T8_KIT_ FLOOR_CERT_LIGHT.png");
+                background-repeat: no-repeat;
+                background-size: cover;
+                background-position: center center;
+                max-height: 100%;
+                max-width: 100%;
+                height: 100%;
+                width: 100%;
+                position: absolute;
+                margin: 0;
+                padding: 0;
+                display: none;
+            }
+
+            #FLOOR-CERDARK-KITCHEN{
+                background-image: url("interior/CM_T8_KITCHEN/01_T8_KIT_ FLOOR_CERT_DARK.png");
+                background-repeat: no-repeat;
+                background-size: cover;
+                background-position: center center;
+                max-height: 100%;
+                max-width: 100%;
+                height: 100%;
+                width: 100%;
+                position: absolute;
+                margin: 0;
+                padding: 0;
+                display: none;
+            }
+
+            #WF-LIGHT-KITCHEN{
+                background-image: url("interior/CM_T8_KITCHEN/02_T8_KIT_ WALLPAINT_LIGHT.png");
+                background-repeat: no-repeat;
+                background-size: cover;
+                background-position: center center;
+                max-height: 100%;
+                max-width: 100%;
+                height: 100%;
+                width: 100%;
+                position: absolute;
+                margin: 0;
+                padding: 0;      
+                display: none;          
+            }
+
+            #WF-CERLIGHT-KITCHEN{
+                background-image: url("interior/CM_T8_KITCHEN/02_T8_KIT_ WALL_CERT_LIGHT.png");
+                background-repeat: no-repeat;
+                background-size: cover;
+                background-position: center center;
+                max-height: 100%;
+                max-width: 100%;
+                height: 100%;
+                width: 100%;
+                position: absolute;
+                margin: 0;
+                padding: 0;     
+                display: none;           
+            }
+
+            #WF-CERDARK-KITCHEN{
+                background-image: url("interior/CM_T8_KITCHEN/02_T8_KIT_ WALL_CERT_DARK.png");
+                background-repeat: no-repeat;
+                background-size: cover;
+                background-position: center center;
+                max-height: 100%;
+                max-width: 100%;
+                height: 100%;
+                width: 100%;
+                position: absolute;
+                margin: 0;
+                padding: 0;
+                display: none;                
+            }
+
+            #WF-DARK-KITCHEN{
+                background-image: url("interior/CM_T8_KITCHEN/02_T8_KIT_ WALLPAINT_DARK.png");
+                background-repeat: no-repeat;
+                background-size: cover;
+                background-position: center center;
+                max-height: 100%;
+                max-width: 100%;
+                height: 100%;
+                width: 100%;
+                position: absolute;
+                margin: 0;
+                padding: 0;   
+                display: none;             
+            }
+
+            #FURNITURE-KITCHEN{
+                background-image: url("interior/CM_T8_KITCHEN/05_T8_KIT_FURNITURE.png");
+                background-repeat: no-repeat;
+                background-size: cover;
+                background-position: center center;
+                max-height: 100%;
+                max-width: 100%;
+                height: 100%;
+                width: 100%;
+                position: absolute;
+                margin: 0;
+                padding: 0;
+                display: none;
+            }
+
+            #LIGHT-KITCHEN{
+                background-image: url("interior/CM_T8_KITCHEN/03_T8_KIT _LIGHT.png");
+                background-repeat: no-repeat;
+                background-size: cover;
+                background-position: center center;
+                max-height: 100%;
+                max-width: 100%;
+                height: 100%;
+                width: 100%;
+                position: absolute;
+                margin: 0;
+                padding: 0;
+                display: none;
+            }
+
+            #DOOR_LIGHT-KITCHEN{
+                background-image: url("interior/CM_T8_KITCHEN/04_T8_KIT_DOOR_TIMBER_LIGHT.png");
+                background-repeat: no-repeat;
+                background-size: cover;
+                background-position: center center;
+                max-height: 100%;
+                max-width: 100%;
+                height: 100%;
+                width: 100%;
+                position: absolute;
+                margin: 0;
+                padding: 0;
+                display: none;
+            }
+
+            #DOOR_DARK-KITCHEN{
+                background-image: url("interior/CM_T8_KITCHEN/04_T8_KIT_DOOR_TIMBER_DARK.png");
+                background-repeat: no-repeat;
+                background-size: cover;
+                background-position: center center;
+                max-height: 100%;
+                max-width: 100%;
+                height: 100%;
+                width: 100%;
+                position: absolute;
+                margin: 0;
+                padding: 0;
+                display: none;
+            }
+
+            
+            #DH_DARK-KITCHEN{
+                background-image: url("interior/CM_T8_KITCHEN/04_T8_KIT_DOOR_FITTING_DARK.png");
+                background-repeat: no-repeat;
+                background-size: cover;
+                background-position: center center;
+                max-height: 100%;
+                max-width: 100%;
+                height: 100%;
+                width: 100%;
+                position: absolute;
+                margin: 0;
+                padding: 0;
+                display: none;
+            }
+
+            #DH_GOLG-KITCHEN{
+                background-image: url("interior/CM_T8_KITCHEN/04_T8_KIT_DOOR_FITTING_BRASS.png");
+                background-repeat: no-repeat;
+                background-size: cover;
+                background-position: center center;
+                max-height: 100%;
+                max-width: 100%;
+                height: 100%;
+                width: 100%;
+                position: absolute;
+                margin: 0;
+                padding: 0;
+                display: none;
+            }
+
+            #DH_SILVER-KITCHEN{
+                background-image: url("interior/CM_T8_KITCHEN/04_T8_KIT_DOOR_FITTING_SILVER.png");
+                background-repeat: no-repeat;
+                background-size: cover;
+                background-position: center center;
+                max-height: 100%;
+                max-width: 100%;
+                height: 100%;
+                width: 100%;
+                position: absolute;
+                margin: 0;
+                padding: 0;
+                display: none;
+            }
+
+            /* MASTER BATHROOM */
+            #FLOOR-TIMBERDARK-BATHROOM{
+                background-image: url("interior/CM-T8-MBATH/02-T8-MBATH-FLOOR-CER-DARK.png");
+                background-repeat: no-repeat;
+                background-size: cover;
+                background-position: center center;
+                max-height: 100%;
+                max-width: 100%;
+                height: 100%;
+                width: 100%;
+                position: absolute;
+                margin: 0;
+                padding: 0;
+                display: none;
+            }
+
+            #WF-LIGHT-BATHROOM{
+                background-image: url("interior/CM-T8-MBATH/T8-MBATH-WALL-PAINT-LIGHT.png");
+                background-repeat: no-repeat;
+                background-size: cover;
+                background-position: center center;
+                max-height: 100%;
+                max-width: 100%;
+                height: 100%;
+                width: 100%;
+                position: absolute;
+                margin: 0;
+                padding: 0;
+                display: none;
+            }
+            #WF-CERLIGHT-BATHROOM{
+                background-image: url("interior/CM-T8-MBATH/02-T8-MBATH-WALL-CER-LIGHT.png");
+                background-repeat: no-repeat;
+                background-size: cover;
+                background-position: center center;
+                max-height: 100%;
+                max-width: 100%;
+                height: 100%;
+                width: 100%;
+                position: absolute;
+                margin: 0;
+                padding: 0;
+                display: none;
+            }
+            #WF-CERDARK-BATHROOM{
+                background-image: url("interior/CM-T8-MBATH/02-T8-MBATH-WALL-CER-DARK.png");
+                background-repeat: no-repeat;
+                background-size: cover;
+                background-position: center center;
+                max-height: 100%;
+                max-width: 100%;
+                height: 100%;
+                width: 100%;
+                position: absolute;
+                margin: 0;
+                padding: 0;
+                display: none;
+            }
+            #WF-DARK-BATHROOM{
+                background-image: url("interior/CM-T8-MBATH/T8-MBATH-WALL-PAINT-DARK.png");
+                background-repeat: no-repeat;
+                background-size: cover;
+                background-position: center center;
+                max-height: 100%;
+                max-width: 100%;
+                height: 100%;
+                width: 100%;
+                position: absolute;
+                margin: 0;
+                padding: 0;
+                display: none;
+            }
+
+            /* MASTER BEDROOM */
+
+            #FLOOR-TIMBERDARK-BEDROOM{
+                background-image: url("interior/CM-T8-MBED/TIMBERFLOORING-DARK.png");
+                background-repeat: no-repeat;
+                background-size: cover;
+                background-position: center center;
+                max-height: 100%;
+                max-width: 100%;
+                height: 100%;
+                width: 100%;
+                position: absolute;
+                margin: 0;
+                padding: 0;
+                display: none;
+            }
+
+            #FLOOR-TIMBERLIGHT-BEDROOM{
+                background-image: url("interior/CM-T8-MBED/TIMBERFLOORING-LIGHT.png");
+                background-repeat: no-repeat;
+                background-size: cover;
+                background-position: center center;
+                max-height: 100%;
+                max-width: 100%;
+                height: 100%;
+                width: 100%;
+                position: absolute;
+                margin: 0;
+                padding: 0;
+                display: none;
+            }
+
+            #FLOOR-CERLIGHT-BEDROOM{
+                background-image: url("interior/CM-T8-MBED/01-MBED-FLOOR-CERAMIC-LIGHT.png");
+                background-repeat: no-repeat;
+                background-size: cover;
+                background-position: center center;
+                max-height: 100%;
+                max-width: 100%;
+                height: 100%;
+                width: 100%;
+                position: absolute;
+                margin: 0;
+                padding: 0;
+                display: none;
+            }
+
+            #FLOOR-CERDARK-BEDROOM{
+                background-image: url("interior/CM-T8-MBED/01-MBED-FLOOR-CERAMIC-DARK.png");
+                background-repeat: no-repeat;
+                background-size: cover;
+                background-position: center center;
+                max-height: 100%;
+                max-width: 100%;
+                height: 100%;
+                width: 100%;
+                position: absolute;
+                margin: 0;
+                padding: 0;
+                display: none;
+            }
+
+            #WF-LIGHT-BEDROOM{
+                background-image: url("interior/CM-T8-MBED/WALLPAINTLIGHT.png");
+                background-repeat: no-repeat;
+                background-size: cover;
+                background-position: center center;
+                max-height: 100%;
+                max-width: 100%;
+                height: 100%;
+                width: 100%;
+                position: absolute;
+                margin: 0;
+                padding: 0;
+                display: none;
+            }
+            #WF-CERLIGHT-BEDROOM{
+                background-image: url("interior/CM-T8-MBED/02-MBED-WALLTILESCERAMIC-LIGHT.png");
+                background-repeat: no-repeat;
+                background-size: cover;
+                background-position: center center;
+                max-height: 100%;
+                max-width: 100%;
+                height: 100%;
+                width: 100%;
+                position: absolute;
+                margin: 0;
+                padding: 0;
+                display: none;
+            }
+            #WF-CERDARK-BEDROOM{
+                background-image: url("interior/CM-T8-MBED/02-MBED-WALLTILESCERAMIC-DARK.png");
+                background-repeat: no-repeat;
+                background-size: cover;
+                background-position: center center;
+                max-height: 100%;
+                max-width: 100%;
+                height: 100%;
+                width: 100%;
+                position: absolute;
+                margin: 0;
+                padding: 0;
+                display: none;
+            }
+            #WF-DARK-BEDROOM{
+                background-image: url("interior/CM-T8-MBED/WALLPAINTDARK.png");
+                background-repeat: no-repeat;
+                background-size: cover;
+                background-position: center center;
+                max-height: 100%;
+                max-width: 100%;
+                height: 100%;
+                width: 100%;
+                position: absolute;
+                margin: 0;
+                padding: 0;
+                display: none;
+            }
+
+            #WT_LIGHT-BEDROOM{
+                background-image: url("interior/CM-T8-MBED/WALLCLADDINGLIGHT.png");
+                background-repeat: no-repeat;
+                background-size: cover;
+                background-position: center center;
+                max-height: 100%;
+                max-width: 100%;
+                height: 100%;
+                width: 100%;
+                position: absolute;
+                margin: 0;
+                padding: 0;
+                display: none;
+            }
+
+            #WT_DARK-BEDROOM{
+                background-image: url("interior/CM-T8-MBED/WALLCLADDING-DARK.png");
+                background-repeat: no-repeat;
+                background-size: cover;
+                background-position: center center;
+                max-height: 100%;
+                max-width: 100%;
+                height: 100%;
+                width: 100%;
+                position: absolute;
+                margin: 0;
+                padding: 0;
+                display: none;
+            }
+
+
+            #FURNITURE-BEDROOM{
+                background-image: url("interior/CM-T8-MBED/FURNITURE.png");
+                background-repeat: no-repeat;
+                background-size: cover;
+                background-position: center center;
+                max-height: 100%;
+                max-width: 100%;
+                height: 100%;
+                width: 100%;
+                position: absolute;
+                margin: 0;
+                padding: 0;
+                display: none;
+            }
+
+
+            /* GUEST BEDROOM */
+            #FLOOR-TIMBERDARK-GUEST{
+                background-image: url("interior/CM_T8_AQ/01_T8_BED03_FLOOR_TIMBER_DARK.png");
+                background-repeat: no-repeat;
+                background-size: cover;
+                background-position: center center;
+                max-height: 100%;
+                max-width: 100%;
+                height: 100%;
+                width: 100%;
+                position: absolute;
+                margin: 0;
+                padding: 0;
+                display: none;
+            }
+
+            #FLOOR-TIMBERLIGHT-GUEST{
+                background-image: url("interior/CM_T8_AQ/01_T8_BED03_FLOOR_TIMBER_LIGHT.png");
+                background-repeat: no-repeat;
+                background-size: cover;
+                background-position: center center;
+                max-height: 100%;
+                max-width: 100%;
+                height: 100%;
+                width: 100%;
+                position: absolute;
+                margin: 0;
+                padding: 0;
+                display: none;
+            }
+
+            #FLOOR-CERLIGHT-GUEST{
+                background-image: url("interior/CM_T8_AQ/01_T8_BED03_FLOOR_CER_LIGHT.png");
+                background-repeat: no-repeat;
+                background-size: cover;
+                background-position: center center;
+                max-height: 100%;
+                max-width: 100%;
+                height: 100%;
+                width: 100%;
+                position: absolute;
+                margin: 0;
+                padding: 0;
+                display: none;
+            }
+
+            #FLOOR-CERDARK-GUEST{
+                background-image: url("interior/CM_T8_AQ/01_T8_BED03_FLOOR_CER_DARK.png");
+                background-repeat: no-repeat;
+                background-size: cover;
+                background-position: center center;
+                max-height: 100%;
+                max-width: 100%;
+                height: 100%;
+                width: 100%;
+                position: absolute;
+                margin: 0;
+                padding: 0;
+                display: none;
+            }
+
+            #WF-LIGHT-GUEST{
+                background-image: url("interior/CM_T8_AQ/02_T8_BED03_WF_LIGHT.png");
+                background-repeat: no-repeat;
+                background-size: cover;
+                background-position: center center;
+                max-height: 100%;
+                max-width: 100%;
+                height: 100%;
+                width: 100%;
+                position: absolute;
+                margin: 0;
+                padding: 0;      
+                display: none;          
+            }
+
+            #WF-CERLIGHT-GUEST{
+                background-image: url("interior/CM_T8_AQ/02_T8_BED03_WF_TIMBER_LIGHT.png");
+                background-repeat: no-repeat;
+                background-size: cover;
+                background-position: center center;
+                max-height: 100%;
+                max-width: 100%;
+                height: 100%;
+                width: 100%;
+                position: absolute;
+                margin: 0;
+                padding: 0;     
+                display: none;           
+            }
+
+            #WF-CERDARK-GUEST{
+                background-image: url("interior/CM_T8_AQ/02_T8_BED03_WF_TIMBER_DARK.png");
+                background-repeat: no-repeat;
+                background-size: cover;
+                background-position: center center;
+                max-height: 100%;
+                max-width: 100%;
+                height: 100%;
+                width: 100%;
+                position: absolute;
+                margin: 0;
+                padding: 0;
+                display: none;                
+            }
+
+            #WF-DARK-GUEST{
+                background-image: url("interior/CM_T8_AQ/02_T8_BED03_WF_DARK.png");
+                background-repeat: no-repeat;
+                background-size: cover;
+                background-position: center center;
+                max-height: 100%;
+                max-width: 100%;
+                height: 100%;
+                width: 100%;
+                position: absolute;
+                margin: 0;
+                padding: 0;   
+                display: none;             
+            }
+
+            #FURNITURE-GUEST{
+                background-image: url("interior/CM_T8_AQ/05_T8_BED03_FURNITURE.png");
+                background-repeat: no-repeat;
+                background-size: cover;
+                background-position: center center;
+                max-height: 100%;
+                max-width: 100%;
+                height: 100%;
+                width: 100%;
+                position: absolute;
+                margin: 0;
+                padding: 0;
+                display: none;
+            }
+
+            #LIGHT-GUEST{
+                background-image: url("interior/CM_T8_AQ/03_T8_BED03_LIGHT.png");
+                background-repeat: no-repeat;
+                background-size: cover;
+                background-position: center center;
+                max-height: 100%;
+                max-width: 100%;
+                height: 100%;
+                width: 100%;
+                position: absolute;
+                margin: 0;
+                padding: 0;
+                display: none;
+            }
+
+            #DOOR_LIGHT-GUEST{
+                background-image: url("interior/CM_T8_AQ/04_T8_BED03_DOOR_TIMBER_LIGHT.png");
+                background-repeat: no-repeat;
+                background-size: cover;
+                background-position: center center;
+                max-height: 100%;
+                max-width: 100%;
+                height: 100%;
+                width: 100%;
+                position: absolute;
+                margin: 0;
+                padding: 0;
+                display: none;
+            }
+
+            
+            #DOOR_DARK-GUEST{
+                background-image: url("interior/CM_T8_AQ/04_T8_BED03_DOOR_TIMBER_DARK.png");
+                background-repeat: no-repeat;
+                background-size: cover;
+                background-position: center center;
+                max-height: 100%;
+                max-width: 100%;
+                height: 100%;
+                width: 100%;
+                position: absolute;
+                margin: 0;
+                padding: 0;
+                display: none;
+            }
+
+            #DH_DARK-GUEST{
+                background-image: url("interior/CM_T8_AQ/04_T8_BED03_DOOR_FITTING_DARK.png");
+                background-repeat: no-repeat;
+                background-size: cover;
+                background-position: center center;
+                max-height: 100%;
+                max-width: 100%;
+                height: 100%;
+                width: 100%;
+                position: absolute;
+                margin: 0;
+                padding: 0;
+                display: none;
+            }
+
+            #DH_GOLG-GUEST{
+                background-image: url("interior/CM_T8_AQ/04_T8_BED03_DOOR_FITTING_BRASS.png");
+                background-repeat: no-repeat;
+                background-size: cover;
+                background-position: center center;
+                max-height: 100%;
+                max-width: 100%;
+                height: 100%;
+                width: 100%;
+                position: absolute;
+                margin: 0;
+                padding: 0;
+                display: none;
+            }
+
+            #DH_SILVER-GUEST{
+                background-image: url("interior/CM_T8_AQ/04_T8_BED03_DOOR_FITTING_SILVER.png");
+                background-repeat: no-repeat;
+                background-size: cover;
+                background-position: center center;
+                max-height: 100%;
+                max-width: 100%;
+                height: 100%;
+                width: 100%;
+                position: absolute;
+                margin: 0;
+                padding: 0;
+                display: none;
+            }
+
+           
+
+        </style>
+    </head>
+<body>
+    <!-- <div id="titre">
+        <h1>AQUAMARINE LEGEND VILLA</h1>
+    </div> -->
+    <div id="base-00"></div>
+    <div id="scene_living_room" class="living-room">        
+        <div id="FLOOR-CERDARK" class="floor"></div>
+        <div id="FLOOR-CERLIGHT" class="floor"></div>
+        <div id="FLOOR-TIMBERDARK" class="floor"></div>
+        <div id="FLOOR-TIMBERLIGHT" class="floor"></div>
+        <div id="WF-DARK" class="wall"></div>
+        <div id="WF-LIGHT" class="wall"></div>
+        <div id="WF-CERDARK" class="wall"></div>
+        <div id="WF-CERLIGHT" class="wall"></div>
+        <div id="WT_DARK" class="wood"></div>
+        <div id="WT_LIGHT" class="wood"></div>
+        <div id="DOOR_DARK" class="door"></div>
+        <div id="DOOR_LIGHT" class="door"></div>
+        <div id="DH_DARK" class="door_handle"></div>
+        <div id="DH_GOLG" class="door_handle"></div>
+        <div id="DH_SILVER" class="door_handle"></div>
+        <div id="LIGHT"></div>
+        <div id="FURNITURE"></div>
+    </div>
+
+    <div id="base-kitchen"></div>
+    <div id="scene_kitchen">        
+        <div id="FLOOR-CERDARK-KITCHEN" class="floor-kitchen"></div>
+        <div id="FLOOR-CERLIGHT-KITCHEN" class="floor-kitchen"></div>
+        <div id="FLOOR-TIMBERDARK-KITCHEN" class="floor-kitchen"></div>
+        <div id="FLOOR-TIMBERLIGHT-KITCHEN" class="floor-kitchen"></div>
+        <div id="WF-LIGHT-KITCHEN" class="wall-kitchen"></div>
+        <div id="WF-CERLIGHT-KITCHEN" class="wall-kitchen"></div>
+        <div id="WF-CERDARK-KITCHEN" class="wall-kitchen"></div>
+        <div id="WF-DARK-KITCHEN" class="wall-kitchen"></div>
+        <div id="DOOR_LIGHT-KITCHEN" class="door-kitchen"></div>
+        <div id="DOOR_DARK-KITCHEN" class="door-kitchen"></div>        
+        <div id="DH_DARK-KITCHEN" class="door_handle-kitchen"></div>
+        <div id="DH_GOLG-KITCHEN" class="door_handle-kitchen"></div>
+        <div id="DH_SILVER-KITCHEN" class="door_handle-kitchen"></div>
+        <div id="LIGHT-KITCHEN"></div>
+        <div id="FURNITURE-KITCHEN"></div>
+    </div>
+
+    <div id="base-bathroom"></div>
+    <div id="scene_master_bathroom">       
+        <div id="FLOOR-TIMBERDARK-BATHROOM" class="floor-bathroom"></div>
+        <div id="FLOOR-TIMBERLIGHT-BATHROOM" class="floor-bathroom"></div>
+        <div id="WF-LIGHT-BATHROOM" class="wall-bathroom"></div>
+        <div id="WF-CERLIGHT-BATHROOM" class="wall-bathroom"></div>
+        <div id="WF-CERDARK-BATHROOM" class="wall-bathroom"></div>        
+        <div id="WF-DARK-BATHROOM" class="wall-bathroom"></div>
+    </div>
+
+    <div id="base-bedroom"></div>
+    <div id="scene_master_bedroom">        
+        <div id="FLOOR-TIMBERDARK-BEDROOM" class="floor-bedroom"></div>
+        <div id="FLOOR-TIMBERLIGHT-BEDROOM" class="floor-bedroom"></div>
+        <div id="FLOOR-CERLIGHT-BEDROOM" class="floor-bedroom"></div>
+        <div id="FLOOR-CERDARK-BEDROOM" class="floor-bedroom"></div>    
+        <div id="WF-LIGHT-BEDROOM" class="wall-bedroom"></div>
+        <div id="WF-CERLIGHT-BEDROOM" class="wall-bedroom"></div>
+        <div id="WF-CERDARK-BEDROOM" class="wall-bedroom"></div>        
+        <div id="WF-DARK-BEDROOM" class="wall-bedroom"></div>
+        <div id="WT_LIGHT-BEDROOM" class="wood-bedroom"></div>
+        <div id="WT_DARK-BEDROOM" class="wood-bedroom"></div>    
+        <div id="FURNITURE-BEDROOM"></div>
+    </div>
+
+    <div id="base-guest"></div>
+    <div id="scene_guest">        
+        <div id="FLOOR-CERDARK-GUEST" class="floor-guest"></div>
+        <div id="FLOOR-CERLIGHT-GUEST" class="floor-guest"></div>
+        <div id="FLOOR-TIMBERDARK-GUEST" class="floor-guest"></div>
+        <div id="FLOOR-TIMBERLIGHT-GUEST" class="floor-guest"></div>
+        <div id="WF-LIGHT-GUEST" class="wall-guest"></div>
+        <div id="WF-CERLIGHT-GUEST" class="wall-guest"></div>
+        <div id="WF-CERDARK-GUEST" class="wall-guest"></div>
+        <div id="WF-DARK-GUEST" class="wall-guest"></div>
+        <div id="DOOR_LIGHT-GUEST" class="door-guest"></div>
+        <div id="DOOR_DARK-GUEST" class="door-guest"></div>        
+        <div id="DH_DARK-GUEST" class="door_handle-guest"></div>
+        <div id="DH_GOLG-GUEST" class="door_handle-guest"></div>
+        <div id="DH_SILVER-GUEST" class="door_handle-guest"></div>
+        <div id="LIGHT-GUEST"></div>
+        <div id="FURNITURE-GUEST"></div>
+    </div>
+
+    <div id="pieces">
+       
+        <button id="living" class="button-active" type="button" onclick="toggleLiving()">
+            <img style="height: 30px;max-width: 40px;" src="icones/Living_Room.png"></img>
+            <div>Living room</div>
+        </button>
+        <button  id="kitchen" type="button" onclick="toggleKitchen()">
+                <img style="height: 30px; max-height: 40px;" src="icones/Kitchen.png"></img>
+                <div>Kitchen</div>
+        </button>
+       
+        <button id="bathroom" type="button" onclick="toggleMasterbathroom()">
+            <img style="height: 30px;max-width: 40px;" src="icones/Bathroom.png"></img>
+            <div>Master bathroom</div>
+        </button> 
+       
+        <button id="bedroom" type="button" onclick="toggleMasterBedroom()">
+            <img style="height: 30px;max-width: 40px;" src="icones/Master_Bedroom.png"></img>
+            <div>Master bedroom</div>
+        </button>
+        <button id="guest" type="button" onclick="toggleGuestBedroom()">
+            <img style="height: 30px;max-width: 40px;" src="icones/Guest_Bedroom.png"></img>
+            <div>Guest bedroom</div>
+        </button>
+        <div>
+            <textarea id="w3review" name="w3review" rows="4" cols="19">Add a comment.</textarea>
+        </div>
+        
+    </div>
+    <div id="options-villa">
+        <div id="sous-options">
+            <div id="flooring">
+                <button   type="button" onclick="setFloorTimberdark()" class="tooltip-button">
+                    <img src="icones/textures/01-T8-LIVING-FLOOR-TIMBER-DARKS.png"></img>
+                    <div class="tooltip">
+                        WOOD STAIN <br>
+                        Colour: Dark oak <br>
+                        Price: $ 5.850 
+                    </div>
+                </button>
+                <button type="button" onclick="setFloorTimberlight()" class="tooltip-button">
+                    <img src="icones/textures/01-T8-LIVING-FLOOR-TIMBERLIGHT.png"></img>
+                    <div class="tooltip">
+                        WOOD STAIN <br>
+                        Colour: Dark oak <br>
+                        Price: $ 5.850 
+                    </div>
+                </button>
+                <button type="button" onclick="setFloorCerlight()" class="tooltip-button">
+                    <img src="icones/textures/01-T8-LIVING-FLOOR-CERLIGHT.png"></img>
+                    <div class="tooltip">
+                        WOOD STAIN <br>
+                        Colour: Dark oak <br>
+                        Price: $ 5.850 
+                    </div>
+                </button>
+                <button type="button" onclick="setFloorCerdark()" class="tooltip-button">
+                    <img src="icones/textures/01-T8-LIVING-FLOOR-CERDARK.png"></img>
+                    <div class="tooltip">
+                        WOOD STAIN <br>
+                        Colour: Dark oak <br>
+                        Price: $ 5.850 
+                    </div>
+                </button>
+            </div>
+            <div id="walling">
+                <button type="button" onclick="setWalllight()" class="tooltip-button">
+                    <img src="icones/textures/WALL-LIGHT.png"></img>
+                    <div class="tooltip">
+                        WOOD STAIN <br>
+                        Colour: Dark oak <br>
+                        Price: $ 5.850 
+                    </div>
+                </button>
+
+                <button type="button" onclick="setWallcerlight()" class="tooltip-button">
+                    <img src="icones/textures/02-T8-LIVING-WALLFINISH-CER-LIGHT.png"></img>
+                    <div class="tooltip">
+                        WOOD STAIN <br>
+                        Colour: Dark oak <br>
+                        Price: $ 5.850 
+                    </div>
+                </button>
+                
+                <button type="button" onclick="setWallcerdark()" class="tooltip-button">
+                    <img src="icones/textures/02-T8-LIVING-WALLFINISH-CER-DARK.png"></img>
+                    <div class="tooltip">
+                        WOOD STAIN <br>
+                        Colour: Dark oak <br>
+                        Price: $ 5.850 
+                    </div>
+                </button>
+
+                <button type="button" onclick="setWalldark()" class="tooltip-button">
+                    <img src="icones/textures/WALL-DARK.png"></img>
+                    <div class="tooltip">
+                        WOOD STAIN <br>
+                        Colour: Dark oak <br>
+                        Price: $ 5.850 
+                    </div>
+                </button>
+                
+            </div>
+            <div id="wood_texture">
+                <button type="button" onclick="setWoodlight()" class="tooltip-button">
+                    <img src="icones/textures/03-T8-LIVING-WOOD-LIGHT.png"></img>
+                    <div class="tooltip">
+                        WOOD STAIN <br>
+                        Colour: Dark oak <br>
+                        Price: $ 5.850 
+                    </div>
+                </button>
+
+                <button type="button" onclick="setWoodlight()" class="tooltip-button">
+                    <img src="icones/textures/03-T8-LIVING-WOOD-DARK.png"></img>
+                    <div class="tooltip">
+                        WOOD STAIN <br>
+                        Colour: Dark oak <br>
+                        Price: $ 5.850 
+                    </div>
+                </button>
+
+            </div>
+            <div id="door">
+                <button type="button" onclick="setDoorlight()" class="tooltip-button">
+                    <img src="icones/textures/04-T8-LIVING-DOOR-TIMBER-LIGHT.png"></img>
+                    <div class="tooltip">
+                        WOOD STAIN <br>
+                        Colour: Dark oak <br>
+                        Price: $ 5.850 
+                    </div>
+                </button>
+
+                <button type="button" onclick="setDoordark()" class="tooltip-button">
+                    <img src="icones/textures/04-T8-LIVING-DOOR-TIMBER-DARK.png"></img>
+                    <div class="tooltip">
+                        WOOD STAIN <br>
+                        Colour: Dark oak <br>
+                        Price: $ 5.850 
+                    </div>
+                </button>
+
+            </div>
+            <div id="door_handle">
+                <button type="button" onclick="setDoorhandledark()" class="tooltip-button">
+                    <img src="icones/textures/04-T8-LIVING-DOOR-FITTING-DARK.png"></img>
+                    <div class="tooltip">
+                        WOOD STAIN <br>
+                        Colour: Dark oak <br>
+                        Price: $ 5.850 
+                    </div>
+                </button>
+
+                <button type="button" onclick="setDoorhandlegold()" class="tooltip-button">
+                    <img src="icones/textures/04-T8-LIVING-DOOR-FITTING-GOLD.png"></img>
+                    <div class="tooltip">
+                        WOOD STAIN <br>
+                        Colour: Dark oak <br>
+                        Price: $ 5.850 
+                    </div>
+                </button>
+
+                <button type="button" onclick="setDoorhandlesilver()" class="tooltip-button">
+                    <img src="icones/textures/04-T8-LIVING-DOOR-FITTING-SILVER.png"></img>
+                    <div class="tooltip">
+                        WOOD STAIN <br>
+                        Colour: Dark oak <br>
+                        Price: $ 5.850 
+                    </div>
+                </button>
+
+            </div>
+        </div>
+
+        <div id="sous-options-kitchen">
+            <div id="flooring-kitchen">
+                <button   type="button" onclick="setFloorTimberdarkKitchen()" class="tooltip-button">
+                    <img src="icones/textures/01-T8-LIVING-FLOOR-TIMBER-DARKS.png"></img>
+                    <div class="tooltip">
+                        WOOD STAIN <br>
+                        Colour: Dark oak <br>
+                        Price: $ 5.850 
+                    </div>
+                </button>
+                <button type="button" onclick="setFloorTimberlightKitchen()" class="tooltip-button">
+                    <img src="icones/textures/01-T8-LIVING-FLOOR-TIMBERLIGHT.png"></img>
+                    <div class="tooltip">
+                        WOOD STAIN <br>
+                        Colour: Dark oak <br>
+                        Price: $ 5.850 
+                    </div>
+                </button>
+                <button type="button" onclick="setFloorCerlightKitchen()" class="tooltip-button">
+                    <img src="icones/textures/01-T8-LIVING-FLOOR-CERLIGHT.png"></img>
+                    <div class="tooltip">
+                        WOOD STAIN <br>
+                        Colour: Dark oak <br>
+                        Price: $ 5.850 
+                    </div>
+                </button>
+                <button type="button" onclick="setFloorCerdarkKitchen()" class="tooltip-button">
+                    <img src="icones/textures/01-T8-LIVING-FLOOR-CERDARK.png"></img>
+                    <div class="tooltip">
+                        WOOD STAIN <br>
+                        Colour: Dark oak <br>
+                        Price: $ 5.850 
+                    </div>
+                </button>
+            </div>
+
+            <div id="walling-kitchen">
+                <button type="button" onclick="setWalllightKitchen()" class="tooltip-button">
+                    <img src="icones/textures/WALL-LIGHT.png"></img>
+                    <div class="tooltip">
+                        WOOD STAIN <br>
+                        Colour: Dark oak <br>
+                        Price: $ 5.850 
+                    </div>
+                </button>
+
+                <button type="button" onclick="setWallcerlightKitchen()" class="tooltip-button">
+                    <img src="icones/textures/02-T8-LIVING-WALLFINISH-CER-LIGHT.png"></img>
+                    <div class="tooltip">
+                        WOOD STAIN <br>
+                        Colour: Dark oak <br>
+                        Price: $ 5.850 
+                    </div>
+                </button>
+                
+                <button type="button" onclick="setWallcerdarkKitchen()" class="tooltip-button">
+                    <img src="icones/textures/02-T8-LIVING-WALLFINISH-CER-DARK.png"></img>
+                    <div class="tooltip">
+                        WOOD STAIN <br>
+                        Colour: Dark oak <br>
+                        Price: $ 5.850 
+                    </div>
+                </button>
+
+                <button type="button" onclick="setWalldarkkitchen()" class="tooltip-button">
+                    <img src="icones/textures/WALL-DARK.png"></img>
+                    <div class="tooltip">
+                        WOOD STAIN <br>
+                        Colour: Dark oak <br>
+                        Price: $ 5.850 
+                    </div>
+                </button>
+                
+            </div>
+            
+            <div id="door-kitchen">
+                <button type="button" onclick="setDoorlightKitchen()" class="tooltip-button">
+                    <img src="icones/textures/04-T8-LIVING-DOOR-TIMBER-LIGHT.png"></img>
+                    <div class="tooltip">
+                        WOOD STAIN <br>
+                        Colour: Dark oak <br>
+                        Price: $ 5.850 
+                    </div>
+                </button>
+
+                <button type="button" onclick="setDoordarkKitchen()" class="tooltip-button">
+                    <img src="icones/textures/04-T8-LIVING-DOOR-TIMBER-DARK.png"></img>
+                    <div class="tooltip">
+                        WOOD STAIN <br>
+                        Colour: Dark oak <br>
+                        Price: $ 5.850 
+                    </div>
+                </button>
+
+            </div>
+
+            <div id="door_handle-kitchen">
+                <button type="button" onclick="setDoorhandledarkKitchen()" class="tooltip-button">
+                    <img src="icones/textures/04-T8-LIVING-DOOR-FITTING-DARK.png"></img>
+                    <div class="tooltip">
+                        WOOD STAIN <br>
+                        Colour: Dark oak <br>
+                        Price: $ 5.850 
+                    </div>
+                </button>
+
+                <button type="button" onclick="setDoorhandlegoldKitchen()" class="tooltip-button">
+                    <img src="icones/textures/04-T8-LIVING-DOOR-FITTING-GOLD.png"></img>
+                    <div class="tooltip">
+                        WOOD STAIN <br>
+                        Colour: Dark oak <br>
+                        Price: $ 5.850 
+                    </div>
+                </button>
+
+                <button type="button" onclick="setDoorhandlesilverKitchen()" class="tooltip-button">
+                    <img src="icones/textures/04-T8-LIVING-DOOR-FITTING-SILVER.png"></img>
+                    <div class="tooltip">
+                        WOOD STAIN <br>
+                        Colour: Dark oak <br>
+                        Price: $ 5.850 
+                    </div>
+                </button>
+
+            </div>
+        </div>
+
+        <div id="sous-options-bathroom">
+            <div id="flooring-bathroom">         
+                <button type="button" onclick="setFloorTimberlightbathroom()" class="tooltip-button">
+                    <img src="icones/textures/01-T8-LIVING-FLOOR-CERLIGHT.png"></img>   
+                    <div class="tooltip">
+                        WOOD STAIN <br>
+                        Colour: Dark oak <br>
+                        Price: $ 5.850 
+                    </div>
+                </button>
+                <button   type="button" onclick="setFloorTimberdarkbathroom()" class="tooltip-button">
+                    <img src="icones/textures/01-T8-LIVING-FLOOR-CERDARK.png"></img>
+                    <div class="tooltip">
+                        WOOD STAIN <br>
+                        Colour: Dark oak <br>
+                        Price: $ 5.850 
+                    </div>
+                </button>
+            </div>
+
+            <div id="walling-bathroom">
+                <button type="button" onclick="setWalllightbathroom()" class="tooltip-button">
+                    <img src="icones/textures/WALL-LIGHT.png"></img>
+                    <div class="tooltip">
+                        WOOD STAIN <br>
+                        Colour: Dark oak <br>
+                        Price: $ 5.850 
+                    </div>
+                </button>
+
+                <button type="button" onclick="setWallcerlightbathroom()" class="tooltip-button">
+                    <img src="icones/textures/02-T8-LIVING-WALLFINISH-CER-LIGHT.png"></img>
+                    <div class="tooltip">
+                        WOOD STAIN <br>
+                        Colour: Dark oak <br>
+                        Price: $ 5.850 
+                    </div>
+                </button>
+                
+                <button type="button" onclick="setWallcerdarkbathroom()" class="tooltip-button">
+                    <img src="icones/textures/02-T8-LIVING-WALLFINISH-CER-DARK.png"></img>
+                    <div class="tooltip">
+                        WOOD STAIN <br>
+                        Colour: Dark oak <br>
+                        Price: $ 5.850 
+                    </div>
+                </button>
+
+                <button type="button" onclick="setWalldarkbathroom()" class="tooltip-button">
+                    <img src="icones/textures/WALL-DARK.png"></img>
+                    <div class="tooltip">
+                        WOOD STAIN <br>
+                        Colour: Dark oak <br>
+                        Price: $ 5.850 
+                    </div>
+                </button>                
+            </div>
+        </div>
+
+        <div id="sous-option-bedroom">
+            <div id="flooring-bedroom">         
+                <button   type="button" onclick="setFloorTimberdarkbedroom()" class="tooltip-button">
+                    <img src="icones/textures/01-T8-LIVING-FLOOR-TIMBER-DARKS.png"></img>
+                    <div class="tooltip">
+                        WOOD STAIN <br>
+                        Colour: Dark oak <br>
+                        Price: $ 5.850 
+                    </div>
+                </button>
+                <button type="button" onclick="setFloorTimberlightbedroom()" class="tooltip-button">
+                    <img src="icones/textures/01-T8-LIVING-FLOOR-TIMBERLIGHT.png"></img>
+                    <div class="tooltip">
+                        WOOD STAIN <br>
+                        Colour: Dark oak <br>
+                        Price: $ 5.850 
+                    </div>
+                </button>
+                <button type="button" onclick="setFloorCerlightbedroom()" class="tooltip-button">
+                    <img src="icones/textures/01-T8-LIVING-FLOOR-CERLIGHT.png"></img>
+                    <div class="tooltip">
+                        WOOD STAIN <br>
+                        Colour: Dark oak <br>
+                        Price: $ 5.850 
+                    </div>
+                </button>
+                <button type="button" onclick="setFloorCerdarkbedroom()" class="tooltip-button">
+                    <img src="icones/textures/01-T8-LIVING-FLOOR-CERDARK.png"></img>
+                    <div class="tooltip">
+                        WOOD STAIN <br>
+                        Colour: Dark oak <br>
+                        Price: $ 5.850 
+                    </div>
+                </button>
+            </div>
+            
+            <div id="walling-bedroom">
+                <button type="button" onclick="setWalllightbedroom()" class="tooltip-button">
+                    <img src="icones/textures/WALL-LIGHT.png"></img>
+                    <div class="tooltip">
+                        WOOD STAIN <br>
+                        Colour: Dark oak <br>
+                        Price: $ 5.850 
+                    </div>
+                </button>
+
+                <button type="button" onclick="setWallcerlightbedroom()" class="tooltip-button">
+                    <img src="icones/textures/02-T8-LIVING-WALLFINISH-CER-LIGHT.png"></img>
+                    <div class="tooltip">
+                        WOOD STAIN <br>
+                        Colour: Dark oak <br>
+                        Price: $ 5.850 
+                    </div>
+                </button>
+                
+                <button type="button" onclick="setWallcerdarkbedroom()" class="tooltip-button">
+                    <img src="icones/textures/02-T8-LIVING-WALLFINISH-CER-DARK.png"></img>
+                    <div class="tooltip">
+                        WOOD STAIN <br>
+                        Colour: Dark oak <br>
+                        Price: $ 5.850 
+                    </div>
+                </button>
+
+                <button type="button" onclick="setWalldarkbedroom()" class="tooltip-button">
+                    <img src="icones/textures/WALL-DARK.png"></img>
+                    <div class="tooltip">
+                        WOOD STAIN <br>
+                        Colour: Dark oak <br>
+                        Price: $ 5.850 
+                    </div>
+                </button>                
+            </div>
+
+            <div id="wood_texture-bedroom">
+                <button type="button" onclick="setWoodlightbedroom()" class="tooltip-button">
+                    <img src="icones/textures/03-T8-LIVING-WOOD-LIGHT.png"></img>
+                    <div class="tooltip">
+                        WOOD STAIN <br>
+                        Colour: Dark oak <br>
+                        Price: $ 5.850 
+                    </div>
+                </button>
+
+                <button type="button" onclick="setWooddarkbedroom()" class="tooltip-button">
+                    <img src="icones/textures/03-T8-LIVING-WOOD-DARK.png"></img>
+                    <div class="tooltip">
+                        WOOD STAIN <br>
+                        Colour: Dark oak <br>
+                        Price: $ 5.850 
+                    </div>
+                </button>
+
+            </div>
+        </div>
+
+        <div id="sous-options-guest">
+            <div id="flooring-guest">
+                <button   type="button" onclick="setFloorTimberdarkGuest()" class="tooltip-button">
+                    <img src="icones/textures/01-T8-LIVING-FLOOR-TIMBER-DARKS.png"></img>
+                    <div class="tooltip">
+                        WOOD STAIN <br>
+                        Colour: Dark oak <br>
+                        Price: $ 5.850 
+                    </div>
+                </button>
+                <button type="button" onclick="setFloorTimberlightGuest()" class="tooltip-button">
+                    <img src="icones/textures/01-T8-LIVING-FLOOR-TIMBERLIGHT.png"></img>
+                    <div class="tooltip">
+                        WOOD STAIN <br>
+                        Colour: Dark oak <br>
+                        Price: $ 5.850 
+                    </div>
+                </button>
+                <button type="button" onclick="setFloorCerlightGuest()" class="tooltip-button">
+                    <img src="icones/textures/01-T8-LIVING-FLOOR-CERLIGHT.png"></img>
+                    <div class="tooltip">
+                        WOOD STAIN <br>
+                        Colour: Dark oak <br>
+                        Price: $ 5.850 
+                    </div>
+                </button>
+                <button type="button" onclick="setFloorCerdarkGuest()" class="tooltip-button">
+                    <img src="icones/textures/01-T8-LIVING-FLOOR-CERDARK.png"></img>
+                    <div class="tooltip">
+                        WOOD STAIN <br>
+                        Colour: Dark oak <br>
+                        Price: $ 5.850 
+                    </div>
+                </button>
+            </div>
+
+            <div id="walling-guest">
+                <button type="button" onclick="setWalllightGuest()" class="tooltip-button">
+                    <img src="icones/textures/WALL-LIGHT.png"></img>
+                    <div class="tooltip">
+                        WOOD STAIN <br>
+                        Colour: Dark oak <br>
+                        Price: $ 5.850 
+                    </div>
+                </button>
+
+                <button type="button" onclick="setWallcerlightGuest()" class="tooltip-button">
+                    <img src="icones/textures/02-T8-LIVING-WALLFINISH-CER-LIGHT.png"></img>
+                    <div class="tooltip">
+                        WOOD STAIN <br>
+                        Colour: Dark oak <br>
+                        Price: $ 5.850 
+                    </div>
+                </button>
+                
+                <button type="button" onclick="setWallcerdarkGuest()" class="tooltip-button">
+                    <img src="icones/textures/02-T8-LIVING-WALLFINISH-CER-DARK.png"></img>
+                    <div class="tooltip">
+                        WOOD STAIN <br>
+                        Colour: Dark oak <br>
+                        Price: $ 5.850 
+                    </div>
+                </button>
+
+                <button type="button" onclick="setWalldarkGuest()" class="tooltip-button">
+                    <img src="icones/textures/WALL-DARK.png"></img>
+                    <div class="tooltip">
+                        WOOD STAIN <br>
+                        Colour: Dark oak <br>
+                        Price: $ 5.850 
+                    </div>
+                </button>
+                
+            </div>
+            
+            <div id="door-guest">
+                <button type="button" onclick="setDoorlightGuest()" class="tooltip-button">
+                    <img src="icones/textures/04-T8-LIVING-DOOR-TIMBER-LIGHT.png"></img>
+                    <div class="tooltip">
+                        WOOD STAIN <br>
+                        Colour: Dark oak <br>
+                        Price: $ 5.850 
+                    </div>
+                </button>
+
+                <button type="button" onclick="setDoordarkGuest()" class="tooltip-button">
+                    <img src="icones/textures/04-T8-LIVING-DOOR-TIMBER-DARK.png"></img>
+                    <div class="tooltip">
+                        WOOD STAIN <br>
+                        Colour: Dark oak <br>
+                        Price: $ 5.850 
+                    </div>
+                </button>
+
+            </div>
+
+            <div id="door_handle-guest">
+                <button type="button" onclick="setDoorhandledarkGuest()" class="tooltip-button">
+                    <img src="icones/textures/04-T8-LIVING-DOOR-FITTING-DARK.png"></img>
+                    <div class="tooltip">
+                        WOOD STAIN <br>
+                        Colour: Dark oak <br>
+                        Price: $ 5.850 
+                    </div>
+                </button>
+
+                <button type="button" onclick="setDoorhandlegoldGuest()" class="tooltip-button">
+                    <img src="icones/textures/04-T8-LIVING-DOOR-FITTING-GOLD.png"></img>
+                    <div class="tooltip">
+                        WOOD STAIN <br>
+                        Colour: Dark oak <br>
+                        Price: $ 5.850 
+                    </div>
+                </button>
+
+                <button type="button" onclick="setDoorhandlesilverGuest()" class="tooltip-button">
+                    <img src="icones/textures/04-T8-LIVING-DOOR-FITTING-SILVER.png"></img>
+                    <div class="tooltip">
+                        WOOD STAIN <br>
+                        Colour: Dark oak <br>
+                        Price: $ 5.850 
+                    </div>
+                </button>
+
+            </div>
+        </div>
+
+        <div id="options">
+            <div id="living-options">
+                <button id="flooring-button" type="button" onclick="toggleFlooring()">
+                        <img style="height: 30px; max-height: 40px;" src="icones/flooring.png"></img>
+                        <div>Flooring</div>
+                </button>
+                <button id="walling-button" type="button" onclick="toggleWall()">
+                    <img style="height: 30px;max-width: 40px;" src="icones/wall.png"></img>
+                    <div>Wall</div>
+                </button>
+                <button id="wood-button" type="button" onclick="toggleWood()">
+                    <img style="height: 30px;max-width: 40px;" src="icones/wood_texture.png"></img>
+                    <div>Wood Texture</div>
+                </button>
+                <button id="furniture-button" type="button" onclick="toggleFurniture()">
+                    <img style="height: 30px;max-width: 40px;" src="icones/furniture.png"></img>
+                    <div>Furniture</div>
+                </button>
+                <button id="light-button" type="button" onclick="toggleLight()">
+                    <img style="height: 30px;max-width: 40px;" src="icones/light.png"></img>
+                    <div>Light</div>
+                </button>
+                <button id="door-button" type="button" onclick="toggleDoor()">
+                    <img style="height: 30px;max-width: 40px;" src="icones/door.png"></img>
+                    <div>Door</div>
+                </button>
+                <button id="handle-button" type="button" onclick="toggleDoorhandle()">
+                    <img style="height: 30px;max-width: 40px;" src="icones/door_handle.png"></img>
+                    <div>Door Handle</div>
+                </button>
+            </div>
+
+            <div id="kitchen-options" style="display: none;">
+                <button id="flooring-kitchen-button" type="button" onclick="toggleFlooringKitchen()">
+                        <img style="height: 30px; max-height: 40px;" src="icones/flooring.png"></img>
+                        <div>Flooring</div>
+                </button>
+                <button id="walling-kitchen-button" type="button" onclick="toggleWallKitchen()">
+                    <img style="height: 30px;max-width: 40px;" src="icones/wall.png"></img>
+                    <div>Wall</div>
+                </button>
+                <button id="furniture-kitchen-button" type="button" onclick="toggleFurnitureKitchen()">
+                    <img style="height: 30px;max-width: 40px;" src="icones/furniture.png"></img>
+                    <div>Furniture</div>
+                </button>
+                <button id="light-kitchen-button" type="button" onclick="toggleLightKitchen()">
+                    <img style="height: 30px;max-width: 40px;" src="icones/light.png"></img>
+                    <div>Light</div>
+                </button>
+                <button id="door-kitchen-button" type="button" onclick="toggleDoorKitchen()">
+                    <img style="height: 30px;max-width: 40px;" src="icones/door.png"></img>
+                    <div>Door</div>
+                </button>
+                <button id="handle-kitchen-button" type="button" onclick="toggleDoorhandleKitchen()">
+                    <img style="height: 30px;max-width: 40px;" src="icones/door_handle.png"></img>
+                    <div>Door Handle</div>
+                </button>
+            </div>
+
+            <div id="bathroom-options" style="display: none;">
+                <button id="flooring-bathroom-button" type="button" onclick="toggleFlooringBathroom()">
+                    <img style="height: 30px; max-height: 40px;" src="icones/flooring.png"></img>
+                    <div>Flooring</div>
+                </button>
+                <button id="wall-bathroom-button" type="button" onclick="toggleWallBathroom()">
+                    <img style="height: 30px; max-width: 40px;" src="icones/wall.png"></img>
+                    <div>Wall</div>
+                </button>
+            </div>
+
+            <div id="bedroom-options" style="display: none;">
+                <button id="flooring-bedroom-button" type="button" onclick="toggleFlooringBedroom()">
+                        <img style="height: 30px; max-height: 40px;" src="icones/flooring.png"></img>
+                        <div>Flooring</div>
+                </button>
+                <button id="walling-bedroom-button" type="button" onclick="toggleWallBedroom()">
+                    <img style="height: 30px;max-width: 40px;" src="icones/wall.png"></img>
+                    <div>Wall</div>
+                </button>
+                <button id="wood-bedroom-button" type="button" onclick="toggleWoodBedroom()">
+                    <img style="height: 30px;max-width: 40px;" src="icones/wood_texture.png"></img>
+                    <div>Wood Texture</div>
+                </button>
+                <button id="furniture-bedroom-button" type="button" onclick="toggleFurnitureBedroom()">
+                    <img style="height: 30px;max-width: 40px;" src="icones/furniture.png"></img>
+                    <div>Furniture</div>
+                </button>
+            </div>
+
+            <div id="guest-options" style="display: none;">
+                <button id="flooring-guest-button" type="button" onclick="toggleFlooringGuest()">
+                        <img style="height: 30px; max-height: 40px;" src="icones/flooring.png"></img>
+                        <div>Flooring</div>
+                </button>
+                <button id="walling-guest-button" type="button" onclick="toggleWallGuest()">
+                    <img style="height: 30px;max-width: 40px;" src="icones/wall.png"></img>
+                    <div>Wall</div>
+                </button>
+                <button id="furniture-guest-button" type="button" onclick="toggleFurnitureGuest()">
+                    <img style="height: 30px;max-width: 40px;" src="icones/furniture.png"></img>
+                    <div>Furniture</div>
+                </button>
+                <button id="light-guest-button" type="button" onclick="toggleLightGuest()">
+                    <img style="height: 30px;max-width: 40px;" src="icones/light.png"></img>
+                    <div>Light</div>
+                </button>
+                <button id="door-guest-button" type="button" onclick="toggleDoorGuest()">
+                    <img style="height: 30px;max-width: 40px;" src="icones/door.png"></img>
+                    <div>Door</div>
+                </button>
+                <button id="handle-guest-button" type="button" onclick="toggleDoorhandleGuest()">
+                    <img style="height: 30px;max-width: 40px;" src="icones/door_handle.png"></img>
+                    <div>Door Handle</div>
+                </button>
+            </div>            
+        </div>
+        <script src="js/obfuscated_interior.js"></script>
+        <script src="js/interior_script.js"></script> 
+    </div>
+</body>
+</html>

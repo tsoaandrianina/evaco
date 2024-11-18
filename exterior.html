@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+        <title>Exterior</title>
+
+        <!-- Babylon.js -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/dat-gui/0.6.2/dat.gui.min.js"></script>
+        <script src="https://assets.babylonjs.com/generated/Assets.js"></script>
+        <script src="https://cdn.babylonjs.com/recast.js"></script>
+        <script src="https://cdn.babylonjs.com/ammo.js"></script>
+        <script src="https://cdn.babylonjs.com/havok/HavokPhysics_umd.js"></script>
+        <script src="https://cdn.babylonjs.com/cannon.js"></script>
+        <script src="https://cdn.babylonjs.com/Oimo.js"></script>
+        <script src="https://cdn.babylonjs.com/earcut.min.js"></script>
+        <script src="https://cdn.babylonjs.com/babylon.js"></script>
+        <script src="https://cdn.babylonjs.com/materialsLibrary/babylonjs.materials.min.js"></script>
+        <script src="https://cdn.babylonjs.com/proceduralTexturesLibrary/babylonjs.proceduralTextures.min.js"></script>
+        <script src="https://cdn.babylonjs.com/postProcessesLibrary/babylonjs.postProcess.min.js"></script>
+        <script src="https://cdn.babylonjs.com/loaders/babylonjs.loaders.js"></script>
+        <script src="https://cdn.babylonjs.com/serializers/babylonjs.serializers.min.js"></script>
+        <script src="https://cdn.babylonjs.com/gui/babylon.gui.min.js"></script>
+        <script src="https://cdn.babylonjs.com/inspector/babylon.inspector.bundle.js"></script>
+
+
+         <!-- jquery -->
+        <script src="https://code.jquery.com/jquery-3.7.1.slim.min.js" integrity="sha256-kmHvs0B+OpCW5GVHUNjv9rOmY0IvSIRcf7zGUDTDQM8=" crossorigin="anonymous"></script>     
+
+
+        <style>
+            html, body {
+                overflow: hidden;
+                width: 100%;    
+                height: 100%;
+                margin: 0;
+                padding: 0;
+                font-family: Lato;
+            }
+
+            #renderCanvas {
+                width: 100%;
+                height: 100%;
+                touch-action: none;
+            }
+            
+            #canvasZone {
+                width: 100%;
+                height: 100%;
+            }
+            #options-villa{
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                width: 100%;
+                text-align: center;
+            }
+            #titre{
+                position: absolute;
+                top: 0;
+                left: 0;
+            }
+            #titre h1{
+                color: #fff;
+                font-family: Lato;
+                font-weight: 500;
+                margin: 25px;
+            }
+            button{
+                padding: 10px 5px;
+                margin: 10px 5px;
+                border-radius: 8px;
+                border: #fff;
+                background-color: rgba(0, 0, 0, 0.35);
+                color: #fff;
+                width: 115px;
+            }
+            button:hover{
+                background-color:#B3976A;
+            }
+
+            .button-active {
+                background-color: #B3976A !important;
+            }
+
+            #paint{
+                display: none;
+                position: relative;
+                margin-right: 75%;
+            }
+
+            #aluminium{
+                display: none;
+                position: relative;
+                margin-right: 63%;
+            }
+
+            #pool{
+                display: none;
+                position: relative;
+                margin-right: 42%;
+            }
+
+            #pool_beach{
+                display: none;
+                position: relative;
+                margin-right: 25%;
+            }
+
+            #pergolas{
+                display: none;
+                position: relative;
+                margin-right: 15%;
+            }
+
+            #Terracepergolas{
+                display: none;
+                position: relative;
+                margin-left: 80%;
+            }
+
+            #opening{
+                display: none;
+                position: relative;
+                margin-left: 10%;
+            }
+
+            #decking{
+                display: none;
+                position: relative;
+                margin-left: 65%;
+            }
+
+            #paint button,#aluminium button, #pool button,#pool_beach button, #pergolas button, #Terracepergolas button,#opening button, #decking button {
+                border-radius: 12px; 
+                border: 2px solid #fff;
+                height: 60px;
+                width: 60px; 
+                padding: 0;
+                margin: 5px;
+            }
+            #paint button img,#aluminium button img, #pool button img, #pool_beach button img,#Terracepergolas button img, #pergolas button img, #opening button img, #decking button img {
+                width: 100%;
+                height: 100%;
+                border-radius: 12px;
+            }
+
+            .tooltip-button {
+                    position: relative;
+                    cursor: pointer;
+                    border: none;
+                    background: none;
+                }
+
+                .tooltip-button .tooltip {
+                    position: absolute;
+                    bottom: 130%; /* Place le tooltip au-dessus du bouton */
+                    left: 50%;
+                    transform: translateX(-50%);
+                    background-color: rgba(51, 51, 51, 0.9);
+                    color: #fff;
+                    padding: 10px;
+                    border-radius: 5px;
+                    white-space: nowrap;
+                    opacity: 0;
+                    visibility: hidden;
+                    transition: opacity 0.2s;
+                    font-size: 12px;
+                    width: max-content;
+                    text-align: center;
+                    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+                }
+
+                .tooltip-button:hover .tooltip {
+                    opacity: 1;
+                    visibility: visible;
+                }
+
+                /* Créer la petite flèche */
+            .tooltip-button .tooltip::after {
+                content: "";
+                position: absolute;
+                top: 100%; 
+                left: 50%;
+                transform: translateX(-50%);
+                border-width: 6px;
+                border-style: solid;
+                border-color: rgba(51, 51, 51, 0.9) transparent transparent transparent;
+            }
+
+        </style>
+    </head>
+<body>
+    <!-- <div id="titre">
+        <h1>AQUAMARINE LEGEND VILLA</h1>
+    </div> -->
+    <div id="options-villa">
+
+        <div id="sous-options" >
+            <div id="paint">               
+                <button type="button" onclick="PaintWhite()" class="tooltip-button">
+                    <img src="icones/textures/paint-1.png"></img>
+                    <div class="tooltip">
+                        WOOD STAIN <br>
+                        Colour: Dark oak <br>
+                        Price: $ 5.850 
+                    </div>
+                </button>
+                <button type="button" onclick="Paint2()" class="tooltip-button">
+                    <img src="icones/textures/paint-2.png"></img>
+                    <div class="tooltip">
+                        WOOD STAIN <br>
+                        Colour: Dark oak <br>
+                        Price: $ 5.850 
+                    </div>
+                </button>
+                <button type="button" onclick="Paint3()" class="tooltip-button">
+                    <img src="icones/textures/paint-3.png"></img>
+                    <div class="tooltip">
+                        WOOD STAIN <br>
+                        Colour: Dark oak <br>
+                        Price: $ 5.850 
+                    </div>
+                </button>
+            </div>
+
+            <div id="aluminium">               
+               
+                <button type="button" onclick="AluBlack()" class="tooltip-button">
+                    <img src="icones/textures/PERGOLAS-FRAME-DARK.png"></img>
+                    <div class="tooltip">
+                        WOOD STAIN <br>
+                        Colour: Dark oak <br>
+                        Price: $ 5.850 
+                    </div>
+                </button>
+                <button type="button" onclick="AluGrey()" class="tooltip-button">
+                    <img src="icones/textures/PERGOLAS-FRAME-GREY.png"></img>
+                    <div class="tooltip">
+                        WOOD STAIN <br>
+                        Colour: Dark oak <br>
+                        Price: $ 5.850 
+                    </div>
+                </button>
+            </div>
+
+            <div id="pool">               
+                <button type="button" onclick="whithoutPool()" class="tooltip-button">
+                    <img src="icones/textures/without.png"></img>
+                    <div class="tooltip">
+                        WOOD STAIN <br>
+                        Colour: Dark oak <br>
+                        Price: $ 5.850 
+                    </div>
+                </button>
+                <button type="button" onclick="withPoolKioskBalau()" class="tooltip-button">
+                    <img src="icones/textures/PERGOLAS-TIMBER-BALAU.png"></img>
+                    <div class="tooltip">
+                        WOOD STAIN <br>
+                        Colour: Dark oak <br>
+                        Price: $ 5.850 
+                    </div>
+                </button>
+                <button type="button" onclick="withPoolKioskDasso()" class="tooltip-button">
+                    <img src="icones/textures/PERGOLAS-TIMBER-DASSOBAMBOO.png"></img>
+                    <div class="tooltip">
+                        WOOD STAIN <br>
+                        Colour: Dark oak <br>
+                        Price: $ 5.850 
+                    </div>
+                </button>
+            </div>
+
+            <div id="pool_beach">               
+                <button type="button" onclick="poolBeachCeramicLappato()" class="tooltip-button">
+                    <img src="icones/textures/PB-ceramic-taupeLappato.png"></img>
+                    <div class="tooltip">
+                        WOOD STAIN <br>
+                        Colour: Dark oak <br>
+                        Price: $ 5.850 
+                    </div>
+                </button>
+                <button type="button" onclick="poolBeachCrosscut()" class="tooltip-button">
+                    <img src="icones/textures/PB-crosscut-cloud.png"></img>
+                    <div class="tooltip">
+                        WOOD STAIN <br>
+                        Colour: Dark oak <br>
+                        Price: $ 5.850 
+                    </div>
+                </button>
+                <button type="button" onclick="poolBeachCeramicLight()" class="tooltip-button">
+                    <img src="icones/textures/PB-Ceramic-Light.png"></img>
+                    <div class="tooltip">
+                        WOOD STAIN <br>
+                        Colour: Dark oak <br>
+                        Price: $ 5.850 
+                    </div>
+                </button>
+            </div>
+
+            <div id="pergolas">               
+                
+                <button type="button" onclick="PergolasTimberBalau()" class="tooltip-button">
+                    <img src="icones/textures/PERGOLAS-TIMBER-BALAU.png"></img>
+                    <div class="tooltip">
+                        WOOD STAIN <br>
+                        Colour: Dark oak <br>
+                        Price: $ 5.850 
+                    </div>
+                </button>
+                <button type="button" onclick="PergolasTimberBamboo()" class="tooltip-button">
+                    <img src="icones/textures/PERGOLAS-TIMBER-DASSOBAMBOO.png"></img>
+                    <div class="tooltip">
+                        WOOD STAIN <br>
+                        Colour: Dark oak <br>
+                        Price: $ 5.850 
+                    </div>
+                </button>
+            </div>
+
+            <div id="Terracepergolas">               
+                <button type="button" onclick="PergolasFrameDark()" class="tooltip-button">
+                    <img src="icones/textures/PERGOLAS-FRAME-DARK.png"></img>
+                    <div class="tooltip">
+                        WOOD STAIN <br>
+                        Colour: Dark oak <br>
+                        Price: $ 5.850 
+                    </div>
+                </button>
+                <button type="button" onclick="PergolasFrameGrey()" class="tooltip-button">
+                    <img src="icones/textures/PERGOLAS-FRAME-GREY.png"></img>
+                    <div class="tooltip">
+                        WOOD STAIN <br>
+                        Colour: Dark oak <br>
+                        Price: $ 5.850 
+                    </div>
+                </button>
+            </div>
+
+            <div id="opening">             
+              
+                <button type="button" onclick="PergolasTimberBalau()" class="tooltip-button">
+                    <img src="icones/textures/PERGOLAS-TIMBER-BALAU.png"></img>
+                    <div class="tooltip">
+                        WOOD STAIN <br>
+                        Colour: Dark oak <br>
+                        Price: $ 5.850 
+                    </div>
+                </button>
+                <button type="button" onclick="PergolasTimberBamboo()" class="tooltip-button">
+                    <img src="icones/textures/PERGOLAS-TIMBER-DASSOBAMBOO.png"></img>
+                    <div class="tooltip">
+                        WOOD STAIN <br>
+                        Colour: Dark oak <br>
+                        Price: $ 5.850 
+                    </div>
+                </button>
+            </div>
+
+            <div id="decking">               
+                
+                <button type="button" onclick="DeckingTimberBalau()" class="tooltip-button">
+                    <img src="icones/textures/PERGOLAS-TIMBER-BALAU.png"></img>
+                    <div class="tooltip">
+                        WOOD STAIN <br>
+                        Colour: Dark oak <br>
+                        Price: $ 5.850 
+                    </div>
+                </button>
+                <button type="button" onclick="DeckingTimberBamboo()" class="tooltip-button">
+                    <img src="icones/textures/PERGOLAS-TIMBER-DASSOBAMBOO.png"></img>
+                    <div class="tooltip">
+                        WOOD STAIN <br>
+                        Colour: Dark oak <br>
+                        Price: $ 5.850 
+                    </div>
+                </button>
+            </div>
+
+        </div>
+
+        <div id="options">
+        
+            <button id="paint-button" type="button" onclick="togglePaint()">
+                <img style="height: 30px;max-width: 40px;" src="icones/paint.png"></img>
+                <div>Paint</div>
+            </button>
+
+            <button id="aluminium-button" type="button" onclick="toggleAlminium()">
+                <img style="height: 30px;max-width: 40px;" src="icones/aluminium.png"></img>
+                <div>Aluminium</div>
+            </button>
+            <button id="pool-button" type="button" onclick="togglePool()">
+                <img style="height: 30px; max-height: 40px;" src="icones/pool.png"></img>
+                <div>Pool</div>
+            </button>
+            <button id="beach-button" type="button" onclick="togglePoolBeach()">
+                <img style="height: 30px; max-height: 40px;" src="icones/pool_beach.png"></img>
+                <div>Pool beach</div>
+            </button>
+            <button id="pergolas-button" type="button" onclick="togglePergolas()">
+                <img style="max-height: 30px;max-width: 40px;" src="icones/pergolas.png"></img>
+                <div>Pergolas</div>
+            </button>
+            <button type="button" onclick="togglePaint()">
+                <img style="max-height: 30px;max-width: 40px;" src="icones/wall_cladding.png"></img>
+                <div>Wall cladding</div>
+            </button>
+            <button id="opening-button" type="button" onclick="toggleOpenings()">
+                <img style="max-height: 30px;max-width: 40px;" src="icones/openings.png"></img>
+                <div>Openings</div>
+            </button>
+            <button id="garage-button" type="button" onclick="toggleGarage()">
+                <img style="max-height: 30px;max-width: 40px;" src="icones/garage.png"></img>
+                <div>Garage</div>
+            </button>
+            <button id="storage-button" type="button" onclick="toggleStorage()">
+                <img style="max-height: 30px;max-width: 40px;" src="icones/pergolas.png"></img>
+                <div>Storage</div>
+            </button>
+            <button id="decking-button" type="button" onclick="toggleDecking()">
+                <img style="max-height: 30px;max-width: 40px;" src="icones/decking.png"></img>
+                <div>Decking</div>
+            </button>
+            <button  id="Terracepergolas-button" type="button" onclick="toggleTerracePergolas()">
+                <img style="max-height: 30px;max-width: 40px;" src="icones/terrace_pergolas.png"></img>
+                <div>Terrace Pergolas</div>
+            </button>
+        </div>
+        
+        
+    </div>
+    <div id="canvasZone"><canvas id="renderCanvas"></canvas></div>
+    <script src="js/script.js">
+
+
+    </script>
+</body>
+</html>
