@@ -67,13 +67,14 @@
                 margin: 25px;
             }
             button{
+                text-transform: uppercase;
                 padding: 10px 5px;
                 margin: 10px 5px;
                 border-radius: 8px;
                 border: #fff;
                 background-color: rgba(0, 0, 0, 0.35);
                 color: #fff;
-                width: 115px;
+                width: 120px;
             }
             button:hover{
                 background-color:#B3976A;
@@ -86,19 +87,19 @@
             #paint{
                 display: none;
                 position: relative;
-                margin-right: 75%;
+                margin-right: 70%;
             }
 
             #aluminium{
                 display: none;
                 position: relative;
-                margin-right: 63%;
+                margin-right: 5%;
             }
 
             #pool{
                 display: none;
                 position: relative;
-                margin-right: 42%;
+                margin-right: 45%;
             }
 
             #pool_beach{
@@ -110,13 +111,13 @@
             #pergolas{
                 display: none;
                 position: relative;
-                margin-right: 15%;
+                margin-right: 45%;
             }
 
             #Terracepergolas{
                 display: none;
                 position: relative;
-                margin-left: 80%;
+                margin-left: 85%;
             }
 
             #opening{
@@ -128,10 +129,28 @@
             #decking{
                 display: none;
                 position: relative;
-                margin-left: 65%;
+                margin-left: 25%;
             }
 
-            #paint button,#aluminium button, #pool button,#pool_beach button, #pergolas button, #Terracepergolas button,#opening button, #decking button {
+            #cladding{
+                display: none;
+                position: relative;
+                margin-left: 42%;
+            }
+
+            #garage{
+                display: none;
+                position: relative;
+                margin-left: 55%;
+            }
+
+            #storage{
+                display: none;
+                position: relative;
+                margin-left: 72%;
+            }
+
+            #paint button,#aluminium button, #pool button,#pool_beach button, #pergolas button, #Terracepergolas button,#opening button, #decking button, #cladding button, #garage button, #storage button {
                 border-radius: 12px; 
                 border: 2px solid #fff;
                 height: 60px;
@@ -139,7 +158,7 @@
                 padding: 0;
                 margin: 5px;
             }
-            #paint button img,#aluminium button img, #pool button img, #pool_beach button img,#Terracepergolas button img, #pergolas button img, #opening button img, #decking button img {
+            #paint button img,#aluminium button img, #pool button img, #pool_beach button img,#Terracepergolas button img, #pergolas button img, #opening button img, #decking button img, #cladding button img, #garage button img, #storage button img {
                 width: 100%;
                 height: 100%;
                 border-radius: 12px;
@@ -197,6 +216,7 @@
     <div id="options-villa">
 
         <div id="sous-options" >
+
             <div id="paint">               
                 <button type="button" onclick="PaintWhite()" class="tooltip-button">
                     <img src="icones/textures/paint-1.png"></img>
@@ -206,7 +226,7 @@
                         Price: $ 5.850 
                     </div>
                 </button>
-                <button type="button" onclick="Paint2()" class="tooltip-button">
+                <button type="button" onclick="PaintWallItalian()" class="tooltip-button">
                     <img src="icones/textures/paint-2.png"></img>
                     <div class="tooltip">
                         WOOD STAIN <br>
@@ -214,7 +234,7 @@
                         Price: $ 5.850 
                     </div>
                 </button>
-                <button type="button" onclick="Paint3()" class="tooltip-button">
+                <button type="button" onclick="PaintEmlwood()" class="tooltip-button">
                     <img src="icones/textures/paint-3.png"></img>
                     <div class="tooltip">
                         WOOD STAIN <br>
@@ -224,9 +244,33 @@
                 </button>
             </div>
 
-            <div id="aluminium">               
-               
-                <button type="button" onclick="AluBlack()" class="tooltip-button">
+            <div id="pergolas"> 
+                  
+                <button type="button" onclick="whithoutPergolas()" class="tooltip-button">
+                    <img src="icones/textures/without.png"></img>
+                    <div class="tooltip">
+                        WOOD STAIN <br>
+                        Colour: Dark oak <br>
+                        Price: $ 5.850 
+                    </div>
+                </button>                       
+                <button type="button" onclick="PergolasTimberBamboo()" class="tooltip-button">
+                    <img src="icones/textures/PERGOLAS-TIMBER-BALAU.png"></img>
+                    <div class="tooltip">
+                        WOOD STAIN <br>
+                        Colour: Dark oak <br>
+                        Price: $ 5.850 
+                    </div>
+                </button>
+                <button type="button" onclick="PergolasTimberBalau()" class="tooltip-button">
+                    <img src="icones/textures/PERGOLAS-TIMBER-DASSOBAMBOO.png"></img>
+                    <div class="tooltip">
+                        WOOD STAIN <br>
+                        Colour: Dark oak <br>
+                        Price: $ 5.850 
+                    </div>
+                </button>
+                <button type="button" onclick="PergolasFrameDark()" class="tooltip-button">
                     <img src="icones/textures/PERGOLAS-FRAME-DARK.png"></img>
                     <div class="tooltip">
                         WOOD STAIN <br>
@@ -234,7 +278,7 @@
                         Price: $ 5.850 
                     </div>
                 </button>
-                <button type="button" onclick="AluGrey()" class="tooltip-button">
+                <button type="button" onclick="PergolasFrameGrey()" class="tooltip-button">
                     <img src="icones/textures/PERGOLAS-FRAME-GREY.png"></img>
                     <div class="tooltip">
                         WOOD STAIN <br>
@@ -253,22 +297,7 @@
                         Price: $ 5.850 
                     </div>
                 </button>
-                <button type="button" onclick="withPoolKioskBalau()" class="tooltip-button">
-                    <img src="icones/textures/PERGOLAS-TIMBER-BALAU.png"></img>
-                    <div class="tooltip">
-                        WOOD STAIN <br>
-                        Colour: Dark oak <br>
-                        Price: $ 5.850 
-                    </div>
-                </button>
-                <button type="button" onclick="withPoolKioskDasso()" class="tooltip-button">
-                    <img src="icones/textures/PERGOLAS-TIMBER-DASSOBAMBOO.png"></img>
-                    <div class="tooltip">
-                        WOOD STAIN <br>
-                        Colour: Dark oak <br>
-                        Price: $ 5.850 
-                    </div>
-                </button>
+                
             </div>
 
             <div id="pool_beach">               
@@ -298,9 +327,16 @@
                 </button>
             </div>
 
-            <div id="pergolas">               
-                
-                <button type="button" onclick="PergolasTimberBalau()" class="tooltip-button">
+            <div id="aluminium">                  
+                <button type="button" onclick="whithoutKios()" class="tooltip-button">
+                    <img src="icones/textures/without.png"></img>
+                    <div class="tooltip">
+                        WOOD STAIN <br>
+                        Colour: Dark oak <br>
+                        Price: $ 5.850 
+                    </div>
+                </button>
+                <button id="kiosk-bamboo" type="button" onclick="PoolKioskBamboo()" class="tooltip-button">                    
                     <img src="icones/textures/PERGOLAS-TIMBER-BALAU.png"></img>
                     <div class="tooltip">
                         WOOD STAIN <br>
@@ -308,27 +344,8 @@
                         Price: $ 5.850 
                     </div>
                 </button>
-                <button type="button" onclick="PergolasTimberBamboo()" class="tooltip-button">
+                <button id="kiosk-balau" type="button" onclick="PoolKioskBalau()" class="tooltip-button">
                     <img src="icones/textures/PERGOLAS-TIMBER-DASSOBAMBOO.png"></img>
-                    <div class="tooltip">
-                        WOOD STAIN <br>
-                        Colour: Dark oak <br>
-                        Price: $ 5.850 
-                    </div>
-                </button>
-            </div>
-
-            <div id="Terracepergolas">               
-                <button type="button" onclick="PergolasFrameDark()" class="tooltip-button">
-                    <img src="icones/textures/PERGOLAS-FRAME-DARK.png"></img>
-                    <div class="tooltip">
-                        WOOD STAIN <br>
-                        Colour: Dark oak <br>
-                        Price: $ 5.850 
-                    </div>
-                </button>
-                <button type="button" onclick="PergolasFrameGrey()" class="tooltip-button">
-                    <img src="icones/textures/PERGOLAS-FRAME-GREY.png"></img>
                     <div class="tooltip">
                         WOOD STAIN <br>
                         Colour: Dark oak <br>
@@ -339,16 +356,16 @@
 
             <div id="opening">             
               
-                <button type="button" onclick="PergolasTimberBalau()" class="tooltip-button">
-                    <img src="icones/textures/PERGOLAS-TIMBER-BALAU.png"></img>
+                <button type="button" onclick="AluBlack()" class="tooltip-button">
+                    <img src="icones/textures/PERGOLAS-FRAME-DARK.png"></img>
                     <div class="tooltip">
                         WOOD STAIN <br>
                         Colour: Dark oak <br>
                         Price: $ 5.850 
                     </div>
                 </button>
-                <button type="button" onclick="PergolasTimberBamboo()" class="tooltip-button">
-                    <img src="icones/textures/PERGOLAS-TIMBER-DASSOBAMBOO.png"></img>
+                <button type="button" onclick="AluGrey()" class="tooltip-button">
+                    <img src="icones/textures/PERGOLAS-FRAME-GREY.png"></img>
                     <div class="tooltip">
                         WOOD STAIN <br>
                         Colour: Dark oak <br>
@@ -359,7 +376,7 @@
 
             <div id="decking">               
                 
-                <button type="button" onclick="DeckingTimberBalau()" class="tooltip-button">
+                <button type="button" onclick="DeckingTimberBamboo()" class="tooltip-button">
                     <img src="icones/textures/PERGOLAS-TIMBER-BALAU.png"></img>
                     <div class="tooltip">
                         WOOD STAIN <br>
@@ -367,7 +384,8 @@
                         Price: $ 5.850 
                     </div>
                 </button>
-                <button type="button" onclick="DeckingTimberBamboo()" class="tooltip-button">
+
+                <button type="button" onclick="DeckingTimberBalau()" class="tooltip-button">             
                     <img src="icones/textures/PERGOLAS-TIMBER-DASSOBAMBOO.png"></img>
                     <div class="tooltip">
                         WOOD STAIN <br>
@@ -375,6 +393,50 @@
                         Price: $ 5.850 
                     </div>
                 </button>
+            </div>
+            
+            <div id="cladding">               
+                
+                <button type="button" onclick="claddingBasalt()" class="tooltip-button">
+                    <img src="icones/textures/wall-cladding-basalt.png"></img>
+                    <div class="tooltip">
+                        WOOD STAIN <br>
+                        Colour: Dark oak <br>
+                        Price: $ 5.850 
+                    </div>
+                </button>
+
+                <button type="button" onclick="claddingVolcanic()" class="tooltip-button">             
+                    <img src="icones/textures/wall-cladding-volcanic.png"></img>
+                    <div class="tooltip">
+                        WOOD STAIN <br>
+                        Colour: Dark oak <br>
+                        Price: $ 5.850 
+                    </div>
+                </button>
+            </div>
+
+            <div id="garage">               
+                <button type="button" onclick="whithoutGarage()" class="tooltip-button">
+                    <img src="icones/textures/without.png"></img>
+                    <div class="tooltip">
+                        WOOD STAIN <br>
+                        Colour: Dark oak <br>
+                        Price: $ 5.850 
+                    </div>
+                </button>
+                
+            </div>
+
+            <div id="storage">               
+                <button type="button" onclick="whithoutStorage()" class="tooltip-button">
+                    <img src="icones/textures/without.png"></img>
+                    <div class="tooltip">
+                        WOOD STAIN <br>
+                        Colour: Dark oak <br>
+                        Price: $ 5.850 
+                    </div>
+                </button>                
             </div>
 
         </div>
@@ -386,10 +448,11 @@
                 <div>Paint</div>
             </button>
 
-            <button id="aluminium-button" type="button" onclick="toggleAlminium()">
-                <img style="height: 30px;max-width: 40px;" src="icones/aluminium.png"></img>
-                <div>Aluminium</div>
+            <button id="pergolas-button" type="button" onclick="togglePergolas()">
+                <img style="max-height: 30px;max-width: 40px;" src="icones/pergolas.png"></img>
+                <div>Pergolas</div>
             </button>
+
             <button id="pool-button" type="button" onclick="togglePool()">
                 <img style="height: 30px; max-height: 40px;" src="icones/pool.png"></img>
                 <div>Pool</div>
@@ -398,18 +461,27 @@
                 <img style="height: 30px; max-height: 40px;" src="icones/pool_beach.png"></img>
                 <div>Pool beach</div>
             </button>
-            <button id="pergolas-button" type="button" onclick="togglePergolas()">
-                <img style="max-height: 30px;max-width: 40px;" src="icones/pergolas.png"></img>
-                <div>Pergolas</div>
+
+            <button  id="aluminium-button" type="button" onclick="toggleAlminium()">
+                <img style="max-height: 30px;max-width: 40px;" src="icones/terrace_pergolas.png"></img>
+                <div>KIOSK</div>
             </button>
-            <button type="button" onclick="togglePaint()">
-                <img style="max-height: 30px;max-width: 40px;" src="icones/wall_cladding.png"></img>
-                <div>Wall cladding</div>
-            </button>
+
             <button id="opening-button" type="button" onclick="toggleOpenings()">
                 <img style="max-height: 30px;max-width: 40px;" src="icones/openings.png"></img>
                 <div>Openings</div>
             </button>
+
+            <button id="decking-button" type="button" onclick="toggleDecking()">
+                <img style="max-height: 30px;max-width: 40px;" src="icones/decking.png"></img>
+                <div>Decking</div>
+            </button>
+           
+            <button id="cladding-button" type="button" onclick="toggleWallCladding()">
+                <img style="max-height: 30px;max-width: 40px;" src="icones/wall_cladding.png"></img>
+                <div>Wall cladding</div>
+            </button>
+           
             <button id="garage-button" type="button" onclick="toggleGarage()">
                 <img style="max-height: 30px;max-width: 40px;" src="icones/garage.png"></img>
                 <div>Garage</div>
@@ -418,14 +490,8 @@
                 <img style="max-height: 30px;max-width: 40px;" src="icones/pergolas.png"></img>
                 <div>Storage</div>
             </button>
-            <button id="decking-button" type="button" onclick="toggleDecking()">
-                <img style="max-height: 30px;max-width: 40px;" src="icones/decking.png"></img>
-                <div>Decking</div>
-            </button>
-            <button  id="Terracepergolas-button" type="button" onclick="toggleTerracePergolas()">
-                <img style="max-height: 30px;max-width: 40px;" src="icones/terrace_pergolas.png"></img>
-                <div>Terrace Pergolas</div>
-            </button>
+           
+           
         </div>
         
         
