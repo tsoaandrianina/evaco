@@ -1,5 +1,6 @@
         /*******************************************************/
         var canvas = document.getElementById("renderCanvas");
+      
 
         var startRenderLoop = function (engine, canvas) {
             engine.runRenderLoop(function () {
@@ -21,7 +22,6 @@
                 //verifier si le modele est charge
                 console.log("Le modèle a été chargé avec succès :", meshes);
 
-
                 setMaterialsTransparency();
 
                 // Cacher certains meshes spécifiés dès le chargement
@@ -42,7 +42,7 @@
 
                 // Create a camera pointing at your model.
                 scene.createDefaultCameraOrLight(true, true, true);
-                scene.activeCamera.useAutoRotationBehavior = true;
+                scene.activeCamera.useAutoRotationBehavior = false;
                 // scene.activeCamera.beta -= 0.2;
 
                 // Limiter la rotation verticale (Beta) pour empêcher de regarder en haut et en bas
@@ -52,6 +52,7 @@
                 // Optionnel : Ajuster légèrement la position initiale de la caméra
                 scene.activeCamera.beta = Math.PI / 2;
                 scene.activeCamera.alpha = 0;
+                scene.activeCamera.fov = 0.3;
         
                 // Désactiver la lumière par défaut et créer une nouvelle lumière
                 scene.lights[0].dispose();
@@ -64,18 +65,19 @@
                 generator.useBlurExponentialShadowMap = true;
                 generator.blurKernel = 32;                
         
-                for (var i = 0; i < scene.meshes.length; i++) {
-                    generator.addShadowCaster(scene.meshes[i]);    
-                }
+                // for (var i = 0; i < scene.meshes.length; i++) {
+                //     generator.addShadowCaster(scene.meshes[i]);    
+                // }
                 
                 // Créer l'environnement par défaut
                 var helper = scene.createDefaultEnvironment({
-                    enableGroundMirror: true,
-                    groundShadowLevel: 0.6,
-                    // groundShadowLevel: 0,
+                    enableGroundMirror: false,
+                    groundShadowLevel: 0.1,
                 });       
         
-                helper.setMainColor(BABYLON.Color3.White());
+                // helper.setMainColor(BABYLON.Color3.White());
+                helper.setMainColor(new BABYLON.Color3.FromHexString("#ffffff"));
+                
             });
         
             return scene;
@@ -132,10 +134,10 @@
             }
 
             //supprimer ombre
-            const groundMesh = scene.getMeshByName("TERRAIN");
-            if (groundMesh) {
-                groundMesh.receiveShadows = false;
-            }
+            // const groundMesh = scene.getMeshByName("TERRAIN");
+            // if (groundMesh) {
+            //     groundMesh.receiveShadows = false;
+            // }
 
         }
 
@@ -550,13 +552,32 @@
             const aluminiumButton = document.getElementById("aluminium-button");
 
             if (allHidden) {
-                if (beachButton) beachButton.style.visibility = "hidden";
-                if (aluminiumButton) aluminiumButton.style.visibility = "hidden";
-                
+                if (beachButton) {
+                    beachButton.disabled = true;
+                    beachButton.classList.add("disabled-button");
+                }
+                if (aluminiumButton) {
+                    aluminiumButton.disabled = true;
+                    aluminiumButton.classList.add("disabled-button");
+                }
             } else {
-                if (beachButton) beachButton.style.visibility = "visible";
-                if (aluminiumButton) aluminiumButton.style.visibility = "visible";
+                if (beachButton) {
+                    beachButton.disabled = false;
+                    beachButton.classList.remove("disabled-button");
+                }
+                if (aluminiumButton) {
+                    aluminiumButton.disabled = false;
+                    aluminiumButton.classList.remove("disabled-button");
+                }
             }
+            // if (allHidden) {
+            //     if (beachButton) beachButton.style.visibility = "hidden";
+            //     if (aluminiumButton) aluminiumButton.style.visibility = "hidden";
+                
+            // } else {
+            //     if (beachButton) beachButton.style.visibility = "visible";
+            //     if (aluminiumButton) aluminiumButton.style.visibility = "visible";
+            // }
 
             
             // if (allHidden) {
@@ -727,7 +748,10 @@
 
         }
 
-        function PoolKioskBalau(){
+        var glowLayer = new BABYLON.GlowLayer("glow", scene);
+        glowLayer.intensity = 0.1;
+
+        function PoolKioskBalau(){           
             // Récupérer le matériau
             let KioskBalau = scene.getMaterialByName("Timber_Balau");
             
@@ -740,11 +764,14 @@
             
             // Vérifier si le matériau existe
             if (KioskBalau) {
+                var glowLayer = new BABYLON.GlowLayer("glow", scene);
+                glowLayer.intensity = 0.8;
                 // Appliquer le matériau à chaque mesh de la liste
                 meshesToUpdate.forEach(meshName => {
                     const mesh = scene.getMeshByName(meshName);
                     if (mesh) {
-                        mesh.material = KioskBalau;                        
+                        mesh.material = KioskBalau;      
+                        glowLayer.addIncludedOnlyMesh(mesh);                  
                     } else {
                         console.log(`Mesh ${meshName} introuvable.`);
                     }
