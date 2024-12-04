@@ -17,19 +17,13 @@
             var scene = new BABYLON.Scene(engine);
         
             // Load the model
-            BABYLON.SceneLoader.Append("scene/", "CM _AQUAMARINE_BLD_EXT_W 2 (1).glb", scene, function (meshes) {
+            // BABYLON.SceneLoader.Append("scene/", "CM _AQUAMARINE_BLD_EXT_W 2 (1).glb", scene, function (meshes) {
+            BABYLON.SceneLoader.Append("scene/", "CM _AQUAMARINE_BLD_EXT_04.glb", scene, function (meshes) {
 
                 //verifier si le modele est charge
                 console.log("Le modèle a été chargé avec succès :", meshes);
 
-                setMaterialsTransparency();
-
-                // Cacher certains meshes spécifiés dès le chargement
-                const meshesToHide = ["TEXTURE_OPENING_FRAME_BLACK","TEXTURE_Pool_Beach_Ceramica_Mayor_Crosscut_Cloud\n",
-                "TEXTURE_Pool _beach_Halcon_Ceramicas_White", "TEXTURE_Eco_Deck_Composite_Timber", "TEXTURE_Pool _beach_Halcon_Ceramicas_White", "TEXTURE_Pool_Beach_Eco Ceramic_Rebel_Taupe_Lappato", "TEXTURE_Timber_Balau", 
-                 "TEXTURE_Timber_BAMBOO", "TEXTURE_Wall_Paint_Sofap_Almost_White_Ref:8002/1", 
-                 "TEXTURE_WATERFALL_BASALT_STONE", "TEXTURE_Text 001","TEXTURE_Text 002","TEXTURE_Text001", "TEXTURE_Text002","TEXTURE_Text003","TEXTURE_Text004","TEXTURE_Text005","TEXTURE_Text006","TEXTURE_Text007","TEXTURE_Text008", "TEXTURE_Text010","TEXTURE_Text011","TEXTURE_Text012","TEXTURE_Text013","TEXTURE_Text014", "TEXTURE_Text015","TEXTURE_Text017", "TEXTURE_TEXTURE__TEXT012", "TEXTURE_Wall Paint - \nElmwood",
-                "TEXTURE_OPENING_FRAME_DARK_GREY_primitive0","TEXTURE_OPENING_FRAME_DARK_GREY_primitive1", "TEXTURE_Wall paint  - Italian Stone_primitive0", "TEXTURE_Wall paint  - Italian Stone_primitive1", "TEXTURE_Wall paint  - Italian Stone_primitive2", "TERRAIN POOL", "TERRAIN", "TEXTURE_STONE_CLADDING_VOLCANIC_STONE_primitive0", "TEXTURE_STONE_CLADDING_VOLCANIC_STONE_primitive1"];
+                const meshesToHide = ["Text001","Text002","Text003","Text004","Text005","Text006","Text007","Text008","Text010","Text011","Text012","Text013","Text014","Text015","Text017","TEXT0012","Text 001","Text 002","TERRAIN POOL", "TERRAIN","Box010Pool_Beach_Eco Ceramic_Rebel_Taupe_Lappato","Eco_Deck_Composite_Timber","OPENING_FRAME_BLACK","OPENING_FRAME_DARK_GREY_primitive0","OPENING_FRAME_DARK_GREY_primitive1","Pool _beach_Halcon_Ceramicas_White","Pool_Beach_Ceramica_Mayor_Crosscut_Cloud\n","Timber_Balau","Timber_BAMBOO","Wall Paint_Elmwood","Wall paint_Italian Stone_primitive0", "Wall paint_Italian Stone_primitive1", "Wall paint_Italian Stone_primitive2","STONE_CLADDING_VOLCANIC_STONE_primitive0","STONE_CLADDING_VOLCANIC_STONE_primitive1","Wall_Paint_Sofap_Almost_White_Ref:8002/1","WATERFALL_BASALT_STONE"]
 
                 meshesToHide.forEach(meshName => {
                     const mesh = scene.getMeshByName(meshName);
@@ -68,7 +62,6 @@
                 generator.useBlurExponentialShadowMap = true;
                 generator.blurKernel = 32;                
         
-                
                 // Créer l'environnement par défaut
                 var helper = scene.createDefaultEnvironment({
                     enableGroundMirror: false,
@@ -109,7 +102,7 @@
 
         function setMaterialsTransparency() {
             // Trouver le matériau pour l'eau et rendre complètement transparent
-            const waterMaterial = scene.getMaterialByName("water");
+            const waterMaterial = scene.getMaterialByName("Water");
             if (waterMaterial) {
                 waterMaterial.alpha = 0.2;
             } else {
@@ -117,7 +110,7 @@
             }
         
             // Trouver le matériau pour le verre et le rendre complètement transparent
-            const glassMaterial = scene.getMaterialByName("glass");
+            const glassMaterial = scene.getMaterialByName("Glass");
             if (glassMaterial) {
                 glassMaterial.alpha = 0.1;
             } else {
@@ -192,7 +185,7 @@
         function PaintWallItalian(){
            
              // Récupérer le matériau
-             let materialWallItalian = scene.getMaterialByName("Wall paint  - Italian Stone");
+             let materialWallItalian = scene.getMaterialByName("Wall_paint_Italian_Stone");
             
              // Liste des meshes à modifier
              const meshesToUpdate = [
@@ -244,10 +237,6 @@
              }
         }
 
-        /* 
-           End Scene Paint
-        */
-
             /* 
            Start Scene Pergolas
            */ 
@@ -270,38 +259,8 @@
                $("#pergolas-button").toggleClass("button-active", $("#pergolas").is(":visible"));       
            }
    
-           function whithoutPergolas() {
-               // Récupérer les meshes
-            //    const pergolasTimber = scene.getMeshByName("PERGOLAS_TIMBER_OPTION");
-            //    const pergolasFrame = scene.getMeshByName("PERGOLAS_FRAME OPTION");
-               
-            //    // Vérifier si les meshes existent
-            //    if (pergolasTimber && pergolasFrame) {
-            //        // Basculer l'état des meshes
-            //        const isEnabled = pergolasTimber.isEnabled() && pergolasFrame.isEnabled();
-            //        pergolasTimber.setEnabled(!isEnabled);
-            //        pergolasFrame.setEnabled(!isEnabled);
-                   
-            //        // Récupérer les boutons concernés
-            //        const buttons = [
-            //            document.querySelector('button[onclick="PergolasTimberBamboo()"]'),
-            //            document.querySelector('button[onclick="PergolasTimberBalau()"]'),
-            //            document.querySelector('button[onclick="PergolasFrameDark()"]'),
-            //            document.querySelector('button[onclick="PergolasFrameGrey()"]'),
-            //        ];
-           
-            //        // Basculer l'affichage des boutons
-            //        buttons.forEach(button => {
-            //            if (button) {
-            //                button.style.display = isEnabled ? "none" : "inline-block";
-            //                // button.disabled = !isEnabled;
-            //            }
-            //        });
-            //    } else {
-            //        console.error("Les meshes PERGOLAS_TIMBER_OPTION ou PERGOLAS_FRAME OPTION sont introuvables.");
-            //    }
+           function whithoutPergolas() {   
 
-            
              const pergolasMeshes = [
                 "PERGOLAS_TIMBER_OPTION",
                 "PERGOLAS_FRAME OPTION",
@@ -321,124 +280,196 @@
            function PergolasTimberBalau(){
            
             let TimberBalau = scene.getMaterialByName("Timber_Balau");
+
+            // Vérifier si le matériau existe
+            if (TimberBalau) {
+                TimberBalau = TimberBalau.clone("Timber_Balau_Clone");
+            }
+
+            // Ajouter une couleur émissive au matériau
+            TimberBalau.emissiveColor = new BABYLON.Color3(0.6, 0.5, 0.4);
+
+             // Vérifier si le GlowLayer existe, sinon le créer
+            if (!scene.glowLayer) {                
+                scene.glowLayer = new BABYLON.GlowLayer("glowLayer", scene);                
+            }
             
             // Liste des meshes à modifier
             const meshesToUpdate = [
                 "PERGOLAS_TIMBER_OPTION",
                 "PERGOLAS_TIMBER_FIX",
                 "PERGOLAS_TIMBERS_FIX",
-                "DECKING_PERGOLA _ENTRANCE",
+                "DECKING_PERGOLA _ENTRANCE",               
               
             ];
-            
-            // Vérifier si le matériau existe
-            if (TimberBalau) {
-                // Appliquer le matériau à chaque mesh de la liste
-                meshesToUpdate.forEach(meshName => {
-                    const mesh = scene.getMeshByName(meshName);
-                    if (mesh) {
-                        mesh.material = TimberBalau;                        
-                    } else {
-                        console.log(`Mesh ${meshName} introuvable.`);
-                    }
-                });
-            } else {
-                console.log("Le matériau OPENING_FRAME_BLACK est introuvable.");
-            }
+
+            meshesToUpdate.forEach(meshName => {
+                const mesh = scene.getMeshByName(meshName);
+                if (mesh) {
+                    mesh.material = TimberBalau;
+        
+                    // Ajouter le mesh au GlowLayer
+                    scene.glowLayer.addIncludedOnlyMesh(mesh);
+                    scene.glowLayer.intensity = 0.8;
+        
+                    // Retirer l'effet Glow après 0,2 seconde
+                    setTimeout(() => {
+                        scene.glowLayer.removeIncludedOnlyMesh(mesh);
+        
+                        // Réinitialiser la couleur émissive
+                        TimberBalau.emissiveColor = new BABYLON.Color3(0, 0, 0);
+                    }, 200);
+                } else {
+                    console.log(`Mesh ${meshName} introuvable.`);
+                }
+            });
            }
    
            function PergolasTimberBamboo(){          
 
                 let TimberBAMBOO = scene.getMaterialByName("Timber_BAMBOO");
+
+                  // Vérifier si le matériau existe
+                if (TimberBAMBOO) {
+                    TimberBAMBOO = TimberBAMBOO.clone("Timber_BAMBOO_Clone");
+                }
+
+                // Ajouter une couleur émissive au matériau
+                TimberBAMBOO.emissiveColor = new BABYLON.Color3(0.6, 0.5, 0.4);
+
+                // Vérifier si le GlowLayer existe, sinon le créer
+                if (!scene.glowLayer) {                
+                    scene.glowLayer = new BABYLON.GlowLayer("glowLayer", scene);                
+                }
             
                 // Liste des meshes à modifier
                 const meshesToUpdate = [
                     "PERGOLAS_TIMBER_OPTION",
                     "PERGOLAS_TIMBER_FIX",
                     "PERGOLAS_TIMBERS_FIX",
-                    "DECKING_PERGOLA _ENTRANCE",
+                    "DECKING_PERGOLA _ENTRANCE",                  
                   
                 ];
-                
-                // Vérifier si le matériau existe
-                if (TimberBAMBOO) {
-                    // Appliquer le matériau à chaque mesh de la liste
-                    meshesToUpdate.forEach(meshName => {
-                        const mesh = scene.getMeshByName(meshName);
-                        if (mesh) {
-                            mesh.material = TimberBAMBOO;                        
-                        } else {
-                            console.log(`Mesh ${meshName} introuvable.`);
-                        }
-                    });
-                } else {
-                    console.log("Le matériau OPENING_FRAME_BLACK est introuvable.");
-                }
+
+                meshesToUpdate.forEach(meshName => {
+                    const mesh = scene.getMeshByName(meshName);
+                    if (mesh) {
+                        mesh.material = TimberBAMBOO;
+            
+                        // Ajouter le mesh au GlowLayer
+                        scene.glowLayer.addIncludedOnlyMesh(mesh);
+                        scene.glowLayer.intensity = 0.8;
+            
+                        // Retirer l'effet Glow après 0,2 seconde
+                        setTimeout(() => {
+                            scene.glowLayer.removeIncludedOnlyMesh(mesh);
+            
+                            // Réinitialiser la couleur émissive
+                            TimberBAMBOO.emissiveColor = new BABYLON.Color3(0, 0, 0);
+                        }, 200);
+                    } else {
+                        console.log(`Mesh ${meshName} introuvable.`);
+                    }
+                });
            }
    
            function PergolasFrameDark(){
 
                 // let TimberBalau = scene.getMaterialByName("Timber_Balau");
                 let Black = scene.getMaterialByName("OPENING_FRAME_BLACK");
+
+                   // Vérifier si le matériau existe
+                   if (Black) {
+                    Black = Black.clone("OPENING_FRAME_BLACK_Clone");
+                }
+
+                // Ajouter une couleur émissive au matériau
+                Black.emissiveColor = new BABYLON.Color3(0.6, 0.5, 0.4);
+
+                // Vérifier si le GlowLayer existe, sinon le créer
+                if (!scene.glowLayer) {                
+                    scene.glowLayer = new BABYLON.GlowLayer("glowLayer", scene);                
+                }
             
                 // Liste des meshes à modifier
                 const meshesToUpdate = [
                     "PERGOLAS_FRAME OPTION",
                     "PERGOLAS_FRAME_FIX",
-                  
+                    "ENTRANCE_PERGOLAS_FRAME",
                   
                 ];
                 
-                // Vérifier si le matériau existe
-                if (Black) {
-                    // Appliquer le matériau à chaque mesh de la liste
-                    meshesToUpdate.forEach(meshName => {
-                        const mesh = scene.getMeshByName(meshName);
-                        if (mesh) {
-                            mesh.material = Black;                        
-                        } else {
-                            console.log(`Mesh ${meshName} introuvable.`);
-                        }
-                    });
-                } else {
-                    console.log("Le matériau OPENING_FRAME_BLACK est introuvable.");
-                }
+                meshesToUpdate.forEach(meshName => {
+                    const mesh = scene.getMeshByName(meshName);
+                    if (mesh) {
+                        mesh.material = Black;
+            
+                        // Ajouter le mesh au GlowLayer
+                        scene.glowLayer.addIncludedOnlyMesh(mesh);
+                        scene.glowLayer.intensity = 0.8;
+            
+                        // Retirer l'effet Glow après 0,2 seconde
+                        setTimeout(() => {
+                            scene.glowLayer.removeIncludedOnlyMesh(mesh);
+            
+                            // Réinitialiser la couleur émissive
+                            Black.emissiveColor = new BABYLON.Color3(0, 0, 0);
+                        }, 200);
+                    } else {
+                        console.log(`Mesh ${meshName} introuvable.`);
+                    }
+                });
    
            }
    
            function PergolasFrameGrey(){
               
                 let DarkGrey = scene.getMaterialByName("OPENING_FRAME_DARK_GREY");
+
+                   // Vérifier si le matériau existe
+                if (DarkGrey) {
+                    DarkGrey = DarkGrey.clone("OPENING_FRAME_BLACK_Clone");
+                }
+
+                // Ajouter une couleur émissive au matériau
+                DarkGrey.emissiveColor = new BABYLON.Color3(0.6, 0.5, 0.4);
+
+                // Vérifier si le GlowLayer existe, sinon le créer
+                if (!scene.glowLayer) {                
+                    scene.glowLayer = new BABYLON.GlowLayer("glowLayer", scene);                
+                }
             
                 // Liste des meshes à modifier
                 const meshesToUpdate = [
                     "PERGOLAS_FRAME OPTION",
                     "PERGOLAS_FRAME_FIX",
-                  
+                    "ENTRANCE_PERGOLAS_FRAME",
                   
                 ];
                 
-                // Vérifier si le matériau existe
-                if (DarkGrey) {
-                    // Appliquer le matériau à chaque mesh de la liste
-                    meshesToUpdate.forEach(meshName => {
-                        const mesh = scene.getMeshByName(meshName);
-                        if (mesh) {
-                            mesh.material = DarkGrey;                        
-                        } else {
-                            console.log(`Mesh ${meshName} introuvable.`);
-                        }
-                    });
-                } else {
-                    console.log("Le matériau OPENING_FRAME_BLACK est introuvable.");
-                }
+                meshesToUpdate.forEach(meshName => {
+                    const mesh = scene.getMeshByName(meshName);
+                    if (mesh) {
+                        mesh.material = DarkGrey;
+            
+                        // Ajouter le mesh au GlowLayer
+                        scene.glowLayer.addIncludedOnlyMesh(mesh);
+                        scene.glowLayer.intensity = 0.8;
+            
+                        // Retirer l'effet Glow après 0,2 seconde
+                        setTimeout(() => {
+                            scene.glowLayer.removeIncludedOnlyMesh(mesh);
+            
+                            // Réinitialiser la couleur émissive
+                            DarkGrey.emissiveColor = new BABYLON.Color3(0, 0, 0);
+                        }, 200);
+                    } else {
+                        console.log(`Mesh ${meshName} introuvable.`);
+                    }
+                });
                
            }
-   
-           /* 
-              End Scene Pergolas
-           */ 
-
+  
         /* 
            Start Scene Pool
         */ 
@@ -460,44 +491,47 @@
             $("#pool-button").toggleClass("button-active", $("#pool").is(":visible"));                   
         }
 
+        const meshesState = {
+            poolMeshes: false, 
+            kiosMeshes: false 
+        };
+
+
         function whithoutPool() {
-            // Liste des noms de meshes liés au pool
             const poolMeshes = [
                 "POOL_CONCRETE_BASE",
                 "POOL_KIOSK",
                 "POOL_PUMP_DECKING",
                 "POOL_TILES_OPTION",
                 "POOL_WALL",
-                "Pool_wall",
                 "POOL_SHADES_OPTION_primitive0",
                 "POOL_SHADES_OPTION_primitive1",
                 "POOL_WATER",
                 "POOL_WALL_OPTION_KIOSK",
-                // "TERRAIN POOL"
-                
+                "Object001"
             ];
         
-            // Basculer l'état de chaque mesh de la liste
+            // Déterminer l'état cible
+            const newState = !meshesState.poolMeshes;
+        
+            // Mettre à jour l'état des meshes
             poolMeshes.forEach(meshName => {
                 const mesh = scene.getMeshByName(meshName);
                 if (mesh) {
-                    mesh.setEnabled(!mesh.isEnabled());
+                    mesh.setEnabled(newState);
                 } else {
                     console.log(`Mesh ${meshName} introuvable.`);
                 }
             });
         
-            // Vérifier si tous les meshes sont cachés
-            const allHidden = poolMeshes.every(meshName => {
-                const mesh = scene.getMeshByName(meshName);
-                return mesh && !mesh.isEnabled();
-            });
-
-             // Gérer la visibilité des boutons
+            // Mettre à jour l'état global
+            meshesState.poolMeshes = newState;
+        
+            // Gérer la visibilité des boutons
             const beachButton = document.getElementById("beach-button");
             const aluminiumButton = document.getElementById("aluminium-button");
-
-            if (allHidden) {
+        
+            if (!newState) {
                 if (beachButton) {
                     beachButton.disabled = true;
                     beachButton.classList.add("disabled-button");
@@ -516,7 +550,6 @@
                     aluminiumButton.classList.remove("disabled-button");
                 }
             }
-      
         }
         
 
@@ -561,10 +594,6 @@
             }
         }
 
-        /* 
-           End Scene Pool
-        */ 
-
         
         /* 
            Start Scene Pool Beach
@@ -587,41 +616,131 @@
         }
 
         function poolBeachCeramicLappato(){
-            scene.getMeshByName("POOL_TILES_OPTION").material.albedoColor = new BABYLON.Color3.FromHexString('#9A9183').toGammaSpace(); 
-             // Récupérer le matériau
-            //  let CeramicLappato = scene.getMaterialByName("Pool_Beach_Eco Ceramic_Rebel_Taupe_Lappato");
+            // scene.getMeshByName("POOL_TILES_OPTION").material.albedoColor = new BABYLON.Color3.FromHexString('#9A9183').toGammaSpace(); 
+
+            const claddingBasaltstone = scene.getMaterialByName("Pool_Beach_Eco Ceramic_Rebel_Taupe_Lappato");
+
+            if (claddingBasaltstone) {                   
+                claddingBasaltstone.clone("Pool_Beach_Eco Ceramic_Rebel_Taupe_Lappato_Clone");
+            }
+            
+            const claddingMesh = scene.getMeshByName("POOL_TILES_OPTION");
+            
+            if (claddingMesh) {
+                // Vérifier si le matériau existe déjà
+                if (claddingMesh.material) {
+                    // Appliquer la couleur directement à albedoColor
+                    claddingMesh.material.emissiveColor = new BABYLON.Color3(0.6, 0.5, 0.4);
+                    claddingMesh.material.albedoColor = BABYLON.Color3.FromHexString('#9A9183').toGammaSpace();
+                } else {
+                    console.log("La mesh n'a pas de matériau assigné.");
+                }
+            
+                // Activer l'effet Glow
+                if (!scene.glowLayer) {
+                    scene.glowLayer = new BABYLON.GlowLayer("glowLayer", scene);
+                }
+                scene.glowLayer.addIncludedOnlyMesh(claddingMesh);
+                scene.glowLayer.intensity = 0.8;
+            
+                // Supprimer l'effet Glow après 1 seconde
+                setTimeout(() => {
+                    scene.glowLayer.removeIncludedOnlyMesh(claddingMesh);
+                    if (claddingMesh.material) {
+                        claddingMesh.material.emissiveColor = new BABYLON.Color3(0, 0, 0);
+                    }
+                }, 200); 
+            } else {
+                console.log("La mesh POOL_TILES_OPTION est introuvable.");
+            }
             
         }
 
         function poolBeachCrosscut(){
-            scene.getMeshByName("POOL_TILES_OPTION").material.albedoColor = new BABYLON.Color3.FromHexString('#C8C4B9').toGammaSpace(); 
-            // let Crosscut = scene.getMaterialByName("Pool_Beach_Ceramica_Mayor_Crosscut_Cloud");
+            // scene.getMeshByName("POOL_TILES_OPTION").material.albedoColor = new BABYLON.Color3.FromHexString('#C8C4B9').toGammaSpace(); 
+            const claddingBasaltstone = scene.getMaterialByName("Pool_Beach_Ceramica_Mayor_Crosscut_Cloud");
+
+            if (claddingBasaltstone) {                   
+                claddingBasaltstone.clone("Pool_Beach_Ceramica_Mayor_Crosscut_Cloud_Clone");
+            }
             
+            const claddingMesh = scene.getMeshByName("POOL_TILES_OPTION");
+            
+            if (claddingMesh) {
+                // Vérifier si le matériau existe déjà
+                if (claddingMesh.material) {
+                    // Appliquer la couleur directement à albedoColor
+                    claddingMesh.material.emissiveColor = new BABYLON.Color3(0.6, 0.5, 0.4);
+                    claddingMesh.material.albedoColor = BABYLON.Color3.FromHexString('#C8C4B9').toGammaSpace();
+                } else {
+                    console.log("La mesh n'a pas de matériau assigné.");
+                }
+            
+                // Activer l'effet Glow
+                if (!scene.glowLayer) {
+                    scene.glowLayer = new BABYLON.GlowLayer("glowLayer", scene);
+                }
+                scene.glowLayer.addIncludedOnlyMesh(claddingMesh);
+                scene.glowLayer.intensity = 0.8;
+            
+                // Supprimer l'effet Glow après 1 seconde
+                setTimeout(() => {
+                    scene.glowLayer.removeIncludedOnlyMesh(claddingMesh);
+                    if (claddingMesh.material) {
+                        claddingMesh.material.emissiveColor = new BABYLON.Color3(0, 0, 0);
+                    }
+                }, 200); 
+            } else {
+                console.log("La mesh POOL_TILES_OPTION est introuvable.");
+            }   
+           
         }
 
         function poolBeachCeramicLight(){
-            scene.getMeshByName("POOL_TILES_OPTION").material.albedoColor = new BABYLON.Color3.FromHexString('#F2F2F2').toGammaSpace(); 
-            // let CeramicLight = scene.getMaterialByName("Pool _beach_Halcon_Ceramicas_White");
-            
-            // // Vérifier si le matériau et la mesh existent
-            // if (CeramicLight && scene.getMeshByName("TIMBER_DECKING_OPTION")) {
-            //     // Appliquer le matériau à la mesh
-            //     scene.getMeshByName("POOL_TILES_OPTION").material = CeramicLight;
-            //     console.log('33333');
-            // } else {
-            //     console.log("Le matériau ou la mesh est introuvable.");
-            // }
-        }
+            // scene.getMeshByName("POOL_TILES_OPTION").material.albedoColor = new BABYLON.Color3.FromHexString('#F2F2F2').toGammaSpace(); 
 
-        /* 
-           End Scene Pool Beach
-        */ 
+            const claddingBasaltstone = scene.getMaterialByName("Pool _beach_Halcon_Ceramicas_White");
+
+            if (claddingBasaltstone) {                   
+                claddingBasaltstone.clone("Pool _beach_Halcon_Ceramicas_White_Clone");
+            }
+            
+            const claddingMesh = scene.getMeshByName("POOL_TILES_OPTION");
+            
+            if (claddingMesh) {
+                // Vérifier si le matériau existe déjà
+                if (claddingMesh.material) {
+                    // Appliquer la couleur directement à albedoColor
+                    claddingMesh.material.emissiveColor = new BABYLON.Color3(0.6, 0.5, 0.4);
+                    claddingMesh.material.albedoColor = BABYLON.Color3.FromHexString('#F2F2F2').toGammaSpace();
+                } else {
+                    console.log("La mesh n'a pas de matériau assigné.");
+                }
+            
+                // Activer l'effet Glow
+                if (!scene.glowLayer) {
+                    scene.glowLayer = new BABYLON.GlowLayer("glowLayer", scene);
+                }
+                scene.glowLayer.addIncludedOnlyMesh(claddingMesh);
+                scene.glowLayer.intensity = 0.8;
+            
+                // Supprimer l'effet Glow après 1 seconde
+                setTimeout(() => {
+                    scene.glowLayer.removeIncludedOnlyMesh(claddingMesh);
+                    if (claddingMesh.material) {
+                        claddingMesh.material.emissiveColor = new BABYLON.Color3(0, 0, 0);
+                    }
+                }, 200); 
+            } else {
+                console.log("La mesh POOL_TILES_OPTION est introuvable.");
+            }
+        }
 
         /* 
            start Scene kiosk
         */ 
 
-           function toggleAlminium(){
+        function toggleAlminium(){
             if ($("#pergolas").is(":visible") || $("#pool").is(":visible")  || $("#pool_beach").is(":visible") || $("#paint").is(":visible") || $("#opening").is(":visible") || $("#decking").is(":visible") || $("#cladding").is(":visible") || $("#garage").is(":visible") || $("#storage").is(":visible")) {
                 $("#pergolas").hide();
                 $("#paint").hide();
@@ -638,42 +757,41 @@
             $("#aluminium-button").toggleClass("button-active", $("#aluminium").is(":visible"));     
         }
 
-        function whithoutKios(){
-            
-            const poolMeshes = [                
+
+        function whithoutKios() {
+            const kiosMeshes = [
                 "POOL_KIOSK",
                 "POOL_PUMP_DECKING",
                 "POOL_WALL_OPTION_KIOSK"
             ];
         
-            // Basculer l'état de chaque mesh de la liste
-            poolMeshes.forEach(meshName => {
+            // Déterminer l'état cible
+            const newState = !meshesState.kiosMeshes;
+        
+            // Mettre à jour l'état des meshes
+            kiosMeshes.forEach(meshName => {
                 const mesh = scene.getMeshByName(meshName);
                 if (mesh) {
-                    mesh.setEnabled(!mesh.isEnabled());
+                    mesh.setEnabled(newState);
                 } else {
                     console.log(`Mesh ${meshName} introuvable.`);
                 }
             });
-
-            // Vérifier si tous les meshes sont cachés
-            const allHidden = poolMeshes.every(meshName => {
-                const mesh = scene.getMeshByName(meshName);
-                return mesh && !mesh.isEnabled();
-            });
-
-             // Gérer la visibilité des boutons
-             const beachButton = document.getElementById("kiosk-bamboo");
-             const aluminiumButton = document.getElementById("kiosk-balau");
- 
-             if (allHidden) {
-                 if (beachButton) beachButton.style.visibility = "hidden";
-                 if (aluminiumButton) aluminiumButton.style.visibility = "hidden";
-             } else {
-                 if (beachButton) beachButton.style.visibility = "visible";
-                 if (aluminiumButton) aluminiumButton.style.visibility = "visible";
-             }
-
+        
+            // Mettre à jour l'état global
+            meshesState.kiosMeshes = newState;
+        
+            // Gérer la visibilité des boutons
+            const beachButton = document.getElementById("kiosk-bamboo");
+            const aluminiumButton = document.getElementById("kiosk-balau");
+        
+            if (!newState) {
+                if (beachButton) beachButton.style.visibility = "hidden";
+                if (aluminiumButton) aluminiumButton.style.visibility = "hidden";
+            } else {
+                if (beachButton) beachButton.style.visibility = "visible";
+                if (aluminiumButton) aluminiumButton.style.visibility = "visible";
+            }
         }
 
         function PoolKioskBalau() {           
@@ -830,28 +948,62 @@
         function AluBlack() {
             // Récupérer le matériau
             let Black = scene.getMaterialByName("OPENING_FRAME_BLACK");
+
+            if (Black) {
+                Black = Black.clone("OPENING_FRAME_BLACK_Clone");
+            }
+            Black.emissiveColor = new BABYLON.Color3(0.6, 0.5, 0.4);
+            if (!scene.glowLayer) {
+                
+                scene.glowLayer = new BABYLON.GlowLayer("glowLayer", scene);
+            }
             
             // Liste des meshes à modifier
             const meshesToUpdate = [
                 "OPENING_WINDOW_FRAME",
                 "OPENING_SCREEN_FRAME",
-                "OPENING_SCREEN_TIMBER"
+                "OPENING_SCREEN_TIMBER",
+                "BED2_SCREEN"
             ];
+
+            
+            meshesToUpdate.forEach(meshName => {
+                const mesh = scene.getMeshByName(meshName);
+                if (mesh) {
+                    mesh.material = Black;
+
+                    // Ajouter le mesh au GlowLayer
+                    scene.glowLayer.addIncludedOnlyMesh(mesh);
+                    scene.glowLayer.intensity = 0.4;
+
+                    // Retirer l'effet Glow après 0,2 seconde
+                    setTimeout(() => {
+                        scene.glowLayer.removeIncludedOnlyMesh(mesh);
+
+                        // Réinitialiser la couleur émissive
+                        Black.emissiveColor = new BABYLON.Color3(0, 0, 0);
+                    }, 200);
+                } else {
+                    console.log(`Mesh ${meshName} introuvable.`);
+                }
+            });
+
+
             
             // Vérifier si le matériau existe
-            if (Black) {
-                // Appliquer le matériau à chaque mesh de la liste
-                meshesToUpdate.forEach(meshName => {
-                    const mesh = scene.getMeshByName(meshName);
-                    if (mesh) {
-                        mesh.material = Black;                        
-                    } else {
-                        console.log(`Mesh ${meshName} introuvable.`);
-                    }
-                });
-            } else {
-                console.log("Le matériau OPENING_FRAME_BLACK est introuvable.");
-            }
+            // if (Black) {
+            //     // Appliquer le matériau à chaque mesh de la liste
+            //     meshesToUpdate.forEach(meshName => {
+            //         const mesh = scene.getMeshByName(meshName);
+            //         if (mesh) {
+            //             mesh.material = Black;                        
+            //         } else {
+            //             console.log(`Mesh ${meshName} introuvable.`);
+            //         }
+            //     });
+            // } else {
+            //     console.log("Le matériau OPENING_FRAME_BLACK est introuvable.");
+            // }
         }
         
 
@@ -864,23 +1016,57 @@
                const meshesToUpdate = [
                    "OPENING_WINDOW_FRAME",
                    "OPENING_SCREEN_FRAME",
-                   "OPENING_SCREEN_TIMBER"
+                   "OPENING_SCREEN_TIMBER",
+                   "BED2_SCREEN"
                ];
+
+               if (Black) {
+                Black = Black.clone("OPENING_FRAME_DARK_GREY_Clone");
+                }
+                Black.emissiveColor = new BABYLON.Color3(0.6, 0.5, 0.4);
+                if (!scene.glowLayer) {
+                    
+                    scene.glowLayer = new BABYLON.GlowLayer("glowLayer", scene);
+                }
+
+                meshesToUpdate.forEach(meshName => {
+                    const mesh = scene.getMeshByName(meshName);
+                    if (mesh) {
+                        mesh.material = Black;
+    
+                        // Ajouter le mesh au GlowLayer
+                        scene.glowLayer.addIncludedOnlyMesh(mesh);
+                        scene.glowLayer.intensity = 0.4;
+    
+                        // Retirer l'effet Glow après 0,2 seconde
+                        setTimeout(() => {
+                            scene.glowLayer.removeIncludedOnlyMesh(mesh);
+    
+                            // Réinitialiser la couleur émissive
+                            Black.emissiveColor = new BABYLON.Color3(0, 0, 0);
+                        }, 200);
+                    } else {
+                        console.log(`Mesh ${meshName} introuvable.`);
+                    }
+                });
+
+
+            
                
                // Vérifier si le matériau existe
-               if (Black) {
-                   // Appliquer le matériau à chaque mesh de la liste
-                   meshesToUpdate.forEach(meshName => {
-                       const mesh = scene.getMeshByName(meshName);
-                       if (mesh) {
-                           mesh.material = Black;
-                       } else {
-                           console.log(`Mesh ${meshName} introuvable.`);
-                       }
-                   });
-               } else {
-                   console.log("Le matériau OPENING_FRAME_BLACK est introuvable.");
-               }
+            //    if (Black) {
+            //        // Appliquer le matériau à chaque mesh de la liste
+            //        meshesToUpdate.forEach(meshName => {
+            //            const mesh = scene.getMeshByName(meshName);
+            //            if (mesh) {
+            //                mesh.material = Black;
+            //            } else {
+            //                console.log(`Mesh ${meshName} introuvable.`);
+            //            }
+            //        });
+            //    } else {
+            //        console.log("Le matériau OPENING_FRAME_BLACK est introuvable.");
+            //    }
             
         }
       
@@ -908,14 +1094,43 @@
 
                  // Récupérer le matériau
                  let TimberBalau = scene.getMaterialByName("Timber_Balau");
+
+                 if (TimberBalau) {                   
+                    TimberBalau = TimberBalau.clone("Timber_BAMBOO_Clone");
+                }
+
+                TimberBalau.emissiveColor = new BABYLON.Color3(0.6, 0.5, 0.4);
+
+                if (!scene.glowLayer) {
+                    scene.glowLayer = new BABYLON.GlowLayer("glowLayer", scene);
+                }
+
+                   // Vérifier si la mesh existe
+                   const deckingMesh = scene.getMeshByName("TIMBER_DECKING_OPTION");
+                   if (deckingMesh) {
+                       // Appliquer le matériau à la mesh
+                       deckingMesh.material = TimberBalau;
+   
+                       // Ajouter la mesh au GlowLayer
+                       scene.glowLayer.addIncludedOnlyMesh(deckingMesh);
+                       scene.glowLayer.intensity = 0.8;
+   
+                       // Supprimer l'effet Glowaprès 1 seconde
+                       setTimeout(() => {
+                           scene.glowLayer.removeIncludedOnlyMesh(deckingMesh);
+                           TimberBalau.emissiveColor = new BABYLON.Color3(0, 0, 0);
+                       }, 200); 
+                   } else {
+                       console.log("La mesh TIMBER_DECKING_OPTION est introuvable.");
+                   }
             
                  // Vérifier si le matériau et la mesh existent
-                 if (TimberBalau && scene.getMeshByName("TIMBER_DECKING_OPTION")) {
-                     // Appliquer le matériau à la mesh
-                     scene.getMeshByName("TIMBER_DECKING_OPTION").material = TimberBalau;
-                 } else {
-                     console.log("Le matériau ou la mesh est introuvable.");
-                 }
+                //  if (TimberBalau && scene.getMeshByName("TIMBER_DECKING_OPTION")) {
+                //      // Appliquer le matériau à la mesh
+                //      scene.getMeshByName("TIMBER_DECKING_OPTION").material = TimberBalau;
+                //  } else {
+                //      console.log("Le matériau ou la mesh est introuvable.");
+                //  }
 
         }
 
@@ -923,14 +1138,45 @@
 
               // Récupérer le matériau
               let TimberBAMBOO = scene.getMaterialByName("Timber_BAMBOO");
+
+                 // Vérifier si le matériau existe
+                if (TimberBAMBOO) {
+                    // Cloner le matériau pour éviter des modifications globales
+                    TimberBAMBOO = TimberBAMBOO.clone("Timber_BAMBOO_Clone");
+                }
+
+                TimberBAMBOO.emissiveColor = new BABYLON.Color3(0.6, 0.5, 0.4);
+
+                if (!scene.glowLayer) {
+                    scene.glowLayer = new BABYLON.GlowLayer("glowLayer", scene);
+                }
+
+                // Vérifier si la mesh existe
+                const deckingMesh = scene.getMeshByName("TIMBER_DECKING_OPTION");
+                if (deckingMesh) {
+                    // Appliquer le matériau à la mesh
+                    deckingMesh.material = TimberBAMBOO;
+
+                    // Ajouter la mesh au GlowLayer
+                    scene.glowLayer.addIncludedOnlyMesh(deckingMesh);
+                    scene.glowLayer.intensity = 0.8;
+
+                    // Supprimer l'effet Glowaprès 1 seconde
+                    setTimeout(() => {
+                        scene.glowLayer.removeIncludedOnlyMesh(deckingMesh);
+                        TimberBAMBOO.emissiveColor = new BABYLON.Color3(0, 0, 0);
+                    }, 200); 
+                } else {
+                    console.log("La mesh TIMBER_DECKING_OPTION est introuvable.");
+                }
             
               // Vérifier si le matériau et la mesh existent
-              if (TimberBAMBOO && scene.getMeshByName("TIMBER_DECKING_OPTION")) {
-                  // Appliquer le matériau à la mesh
-                  scene.getMeshByName("TIMBER_DECKING_OPTION").material = TimberBAMBOO;
-              } else {
-                  console.log("Le matériau ou la mesh est introuvable.");
-              }
+            //   if (TimberBAMBOO && scene.getMeshByName("TIMBER_DECKING_OPTION")) {
+            //       // Appliquer le matériau à la mesh
+            //       scene.getMeshByName("TIMBER_DECKING_OPTION").material = TimberBAMBOO;
+            //   } else {
+            //       console.log("Le matériau ou la mesh est introuvable.");
+            //   }
 
         }
 
@@ -938,7 +1184,6 @@
            Start Scene wall Cladding
         */
 
-        //WALL CLADDING
         function toggleWallCladding() {
             if ($("#paint").is(":visible") || $("#aluminium").is(":visible")|| $("#pool").is(":visible")  || $("#pool_beach").is(":visible") || $("#pergolas").is(":visible") || $("#opening").is(":visible") || $("#decking").is(":visible") || $("#garage").is(":visible") || $("#storage").is(":visible") ) {
                 $("#paint").hide();
@@ -959,33 +1204,90 @@
 
         function claddingBasalt(){
              // Récupérer le matériau
-             let claddingBasaltstone = scene.getMaterialByName("WATERFALL_BASALT_STONE");
+            //  let claddingBasaltstone = scene.getMaterialByName("WATERFALL_BASALT_STONE");
             
-             // Vérifier si le matériau et la mesh existent
-             if (claddingBasaltstone && scene.getMeshByName("STONE_CLADDING_OPTION")) {
-                 // Appliquer le matériau à la mesh
-                 scene.getMeshByName("STONE_CLADDING_OPTION").material = claddingBasaltstone;
-             } else {
-                 console.log("Le matériau ou la mesh est introuvable.");
-             }
+            //  // Vérifier si le matériau et la mesh existent
+            //  if (claddingBasaltstone && scene.getMeshByName("STONE_CLADDING_OPTION")) {
+            //      // Appliquer le matériau à la mesh
+            //      scene.getMeshByName("STONE_CLADDING_OPTION").material = claddingBasaltstone;
+            //  } else {
+            //      console.log("Le matériau ou la mesh est introuvable.");
+            //  }
+
+            // Récupérer le matériau
+            let claddingBasaltstone = scene.getMaterialByName("WATERFALL_BASALT_STONE");
+
+            if (claddingBasaltstone) {                   
+                claddingBasaltstone = claddingBasaltstone.clone("WATERFALL_BASALT_STONE_Clone");
+           }
+
+           claddingBasaltstone.emissiveColor = new BABYLON.Color3(0.6, 0.5, 0.4);
+
+           if (!scene.glowLayer) {
+               scene.glowLayer = new BABYLON.GlowLayer("glowLayer", scene);
+           }
+
+              // Vérifier si la mesh existe
+              const claddingMesh = scene.getMeshByName("STONE_CLADDING_OPTION");
+              if (claddingMesh) {
+                  // Appliquer le matériau à la mesh
+                  claddingMesh.material = claddingBasaltstone;
+
+                  // Ajouter la mesh au GlowLayer
+                  scene.glowLayer.addIncludedOnlyMesh(claddingMesh);
+                  scene.glowLayer.intensity = 0.8;
+
+                  // Supprimer l'effet Glowaprès 1 seconde
+                  setTimeout(() => {
+                      scene.glowLayer.removeIncludedOnlyMesh(claddingMesh);
+                      claddingBasaltstone.emissiveColor = new BABYLON.Color3(0, 0, 0);
+                  }, 200); 
+              } else {
+                  console.log("La mesh STONE_CLADDING_OPTION est introuvable.");
+              }
         }
 
         function claddingVolcanic(){
             // Récupérer le matériau
             let claddingVolcanicstone = scene.getMaterialByName("STONE_CLADDING_VOLCANIC_STONE");
-           
+
+            if (claddingVolcanicstone) {                   
+                claddingVolcanicstone = claddingVolcanicstone.clone("STONE_CLADDING_VOLCANIC_STONE_Clone");
+           }
+
+           claddingVolcanicstone.emissiveColor = new BABYLON.Color3(0.6, 0.5, 0.4);
+
+           if (!scene.glowLayer) {
+               scene.glowLayer = new BABYLON.GlowLayer("glowLayer", scene);
+           }
+
+           const claddingMesh = scene.getMeshByName("STONE_CLADDING_OPTION");
+           if (claddingMesh) {
+               // Appliquer le matériau à la mesh
+               claddingMesh.material = claddingVolcanicstone;
+
+               // Ajouter la mesh au GlowLayer
+               scene.glowLayer.addIncludedOnlyMesh(claddingMesh);
+               scene.glowLayer.intensity = 0.8;
+
+               // Supprimer l'effet Glowaprès 1 seconde
+               setTimeout(() => {
+                   scene.glowLayer.removeIncludedOnlyMesh(claddingMesh);
+                   claddingVolcanicstone.emissiveColor = new BABYLON.Color3(0, 0, 0);
+               }, 200); 
+           } else {
+               console.log("La mesh STONE_CLADDING_OPTION est introuvable.");
+           }           
+
             // Vérifier si le matériau et la mesh existent
-            if (claddingVolcanicstone && scene.getMeshByName("STONE_CLADDING_OPTION")) {
-                // Appliquer le matériau à la mesh
-                scene.getMeshByName("STONE_CLADDING_OPTION").material = claddingVolcanicstone;
-            } else {
-                console.log("Le matériau ou la mesh est introuvable.");
-            }
+            // if (claddingVolcanicstone && scene.getMeshByName("STONE_CLADDING_OPTION")) {
+            //     // Appliquer le matériau à la mesh
+            //     scene.getMeshByName("STONE_CLADDING_OPTION").material = claddingVolcanicstone;
+            // } else {
+            //     console.log("Le matériau ou la mesh est introuvable.");
+            // }
        }
 
-        /* 
-           End Scene wall Cladding
-        */
          
         /* 
            start Scene garage
@@ -1042,11 +1344,57 @@
             scene.getMeshByName("Storage_Door").setEnabled((scene.getMeshByName("Storage_Door").isEnabled() ? false : true));
         }
 
+        function setActiveButton(button) {
+            // Retirer la classe active de tous les boutons
+            document.querySelectorAll('#actif-paint').forEach(btn => {
+                btn.classList.remove('active');
+            });
+    
+            // Ajouter la classe active au bouton cliqué
+            button.classList.add('active');
+        }
 
-       
+        function setActiveButtonPergolas(button){
+            document.querySelectorAll('#actif-pergolas').forEach(btn => {
+                btn.classList.remove('active');
+            });
+    
+            // Ajouter la classe active au bouton cliqué
+            button.classList.add('active');
+        }
 
-       
+        function setActiveButtonBeach(button){
+            document.querySelectorAll('#actif-beach').forEach(btn => {
+                btn.classList.remove('active');
+            });
+    
+            // Ajouter la classe active au bouton cliqué
+            button.classList.add('active');
+        }
 
-      
+        function setActiveButtonOpening(button){
+            document.querySelectorAll('#actif-opening').forEach(btn => {
+                btn.classList.remove('active');
+            });
+    
+            // Ajouter la classe active au bouton cliqué
+            button.classList.add('active');
+        }
 
-     
+        function setActiveButtonDecking(button){
+            document.querySelectorAll('#actif-decking').forEach(btn => {
+                btn.classList.remove('active');
+            });
+    
+            // Ajouter la classe active au bouton cliqué
+            button.classList.add('active');
+        }
+
+        function setActiveButtonCladding(button){
+            document.querySelectorAll('#actif-cladding').forEach(btn => {
+                btn.classList.remove('active');
+            });
+    
+            // Ajouter la classe active au bouton cliqué
+            button.classList.add('active');
+        }
