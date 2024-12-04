@@ -207,6 +207,30 @@
                 border-color: rgba(51, 51, 51, 0.9) transparent transparent transparent;
             }
 
+            #actif-paint.active {
+                border: 2px solid #B3976A; 
+            }
+
+            #actif-pergolas.active {
+                border: 2px solid #B3976A; 
+            }
+
+            #actif-beach.active {
+                border: 2px solid #B3976A; 
+            }
+
+            #actif-opening.active {
+                border: 2px solid #B3976A; 
+            }
+
+            #actif-decking.active {
+                border: 2px solid #B3976A; 
+            }
+
+            #actif-cladding.active {
+                border: 2px solid #B3976A; 
+            }
+
         </style>
     </head>
 <body>
@@ -218,7 +242,7 @@
         <div id="sous-options" >
 
             <div id="paint">               
-                <button type="button" onclick="PaintWhite()" class="tooltip-button">
+                <button id="actif-paint" type="button" onclick="setActiveButton(this);PaintWhite()" class="tooltip-button">
                     <img src="icones/textures/paint-1.png"></img>
                     <div class="tooltip">
                         WOOD STAIN <br>
@@ -226,7 +250,7 @@
                         Price: $ 5.850 
                     </div>
                 </button>
-                <button type="button" onclick="PaintWallItalian()" class="tooltip-button">
+                <button id="actif-paint" type="button" onclick="setActiveButton(this);PaintWallItalian()" class="tooltip-button">
                     <img src="icones/textures/paint-2.png"></img>
                     <div class="tooltip">
                         WOOD STAIN <br>
@@ -234,7 +258,7 @@
                         Price: $ 5.850 
                     </div>
                 </button>
-                <button type="button" onclick="PaintEmlwood()" class="tooltip-button">
+                <button id="actif-paint" type="button" onclick="setActiveButton(this); PaintEmlwood()" class="tooltip-button">
                     <img src="icones/textures/paint-3.png"></img>
                     <div class="tooltip">
                         WOOD STAIN <br>
@@ -246,7 +270,7 @@
 
             <div id="pergolas"> 
                   
-                <button type="button" onclick="whithoutPergolas()" class="tooltip-button">
+                <button type="button" onclick=" whithoutPergolas()" class="tooltip-button">
                     <img src="icones/textures/without.png"></img>
                     <div class="tooltip">
                         WOOD STAIN <br>
@@ -254,7 +278,7 @@
                         Price: $ 5.850 
                     </div>
                 </button>                       
-                <button type="button" onclick="PergolasTimberBamboo()" class="tooltip-button">
+                <button id="actif-pergolas" type="button" onclick=" setActiveButtonPergolas(this); PergolasTimberBamboo()" class="tooltip-button">
                     <img src="icones/textures/PERGOLAS-TIMBER-BALAU.png"></img>
                     <div class="tooltip">
                         WOOD STAIN <br>
@@ -262,7 +286,7 @@
                         Price: $ 5.850 
                     </div>
                 </button>
-                <button type="button" onclick="PergolasTimberBalau()" class="tooltip-button">
+                <button id="actif-pergolas" type="button" onclick=" setActiveButtonPergolas(this); PergolasTimberBalau()" class="tooltip-button">
                     <img src="icones/textures/PERGOLAS-TIMBER-DASSOBAMBOO.png"></img>
                     <div class="tooltip">
                         WOOD STAIN <br>
@@ -270,7 +294,7 @@
                         Price: $ 5.850 
                     </div>
                 </button>
-                <button type="button" onclick="PergolasFrameDark()" class="tooltip-button">
+                <button id="actif-pergolas" type="button" onclick="setActiveButtonPergolas(this); PergolasFrameDark()" class="tooltip-button">
                     <img src="icones/textures/PERGOLAS-FRAME-DARK.png"></img>
                     <div class="tooltip">
                         WOOD STAIN <br>
@@ -278,7 +302,7 @@
                         Price: $ 5.850 
                     </div>
                 </button>
-                <button type="button" onclick="PergolasFrameGrey()" class="tooltip-button">
+                <button id="actif-pergolas" type="button" onclick="setActiveButtonPergolas(this); PergolasFrameGrey()" class="tooltip-button">
                     <img src="icones/textures/PERGOLAS-FRAME-GREY.png"></img>
                     <div class="tooltip">
                         WOOD STAIN <br>
@@ -301,7 +325,7 @@
             </div>
 
             <div id="pool_beach">               
-                <button type="button" onclick="poolBeachCeramicLappato()" class="tooltip-button">
+                <button id="actif-beach" type="button" onclick="setActiveButtonBeach(this); poolBeachCeramicLappato()" class="tooltip-button">
                     <img src="icones/textures/PB-ceramic-taupeLappato.png"></img>
                     <div class="tooltip">
                         WOOD STAIN <br>
@@ -309,7 +333,7 @@
                         Price: $ 5.850 
                     </div>
                 </button>
-                <button type="button" onclick="poolBeachCrosscut()" class="tooltip-button">
+                <button id="actif-beach" type="button" onclick="setActiveButtonBeach(this); poolBeachCrosscut()" class="tooltip-button">
                     <img src="icones/textures/PB-crosscut-cloud.png"></img>
                     <div class="tooltip">
                         WOOD STAIN <br>
@@ -317,7 +341,7 @@
                         Price: $ 5.850 
                     </div>
                 </button>
-                <button type="button" onclick="poolBeachCeramicLight()" class="tooltip-button">
+                <button id="actif-beach" type="button" onclick="setActiveButtonBeach(this); poolBeachCeramicLight()" class="tooltip-button">
                     <img src="icones/textures/PB-Ceramic-Light.png"></img>
                     <div class="tooltip">
                         WOOD STAIN <br>
@@ -356,7 +380,7 @@
 
             <div id="opening">             
               
-                <button type="button" onclick="AluBlack()" class="tooltip-button">
+                <button id="actif-opening" type="button" onclick="setActiveButtonOpening(this); AluBlack()" class="tooltip-button">
                     <img src="icones/textures/PERGOLAS-FRAME-DARK.png"></img>
                     <div class="tooltip">
                         WOOD STAIN <br>
@@ -364,7 +388,7 @@
                         Price: $ 5.850 
                     </div>
                 </button>
-                <button type="button" onclick="AluGrey()" class="tooltip-button">
+                <button id="actif-opening" type="button" onclick="setActiveButtonOpening(this); AluGrey()" class="tooltip-button">
                     <img src="icones/textures/PERGOLAS-FRAME-GREY.png"></img>
                     <div class="tooltip">
                         WOOD STAIN <br>
@@ -376,7 +400,7 @@
 
             <div id="decking">               
                 
-                <button type="button" onclick="DeckingTimberBamboo()" class="tooltip-button">
+                <button id="actif-decking" type="button" onclick="setActiveButtonDecking(this); DeckingTimberBamboo()" class="tooltip-button">
                     <img src="icones/textures/PERGOLAS-TIMBER-BALAU.png"></img>
                     <div class="tooltip">
                         WOOD STAIN <br>
@@ -385,7 +409,7 @@
                     </div>
                 </button>
 
-                <button type="button" onclick="DeckingTimberBalau()" class="tooltip-button">             
+                <button id="actif-decking" type="button" onclick="setActiveButtonDecking(this); DeckingTimberBalau()" class="tooltip-button">             
                     <img src="icones/textures/PERGOLAS-TIMBER-DASSOBAMBOO.png"></img>
                     <div class="tooltip">
                         WOOD STAIN <br>
@@ -397,7 +421,7 @@
             
             <div id="cladding">               
                 
-                <button type="button" onclick="claddingBasalt()" class="tooltip-button">
+                <button id="actif-cladding" type="button" onclick="setActiveButtonCladding(this); claddingBasalt()" class="tooltip-button">
                     <img src="icones/textures/wall-cladding-basalt.png"></img>
                     <div class="tooltip">
                         WOOD STAIN <br>
@@ -406,7 +430,7 @@
                     </div>
                 </button>
 
-                <button type="button" onclick="claddingVolcanic()" class="tooltip-button">             
+                <button id="actif-cladding" type="button" onclick="setActiveButtonCladding(this); claddingVolcanic()" class="tooltip-button">             
                     <img src="icones/textures/wall-cladding-volcanic.png"></img>
                     <div class="tooltip">
                         WOOD STAIN <br>
